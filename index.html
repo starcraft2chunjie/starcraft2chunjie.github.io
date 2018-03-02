@@ -199,7 +199,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近一直在研究CV领域的一些算法，由于本人编程水平较弱加之faster rcnn算法比较复杂，虽然原理在很早就大致看懂，但在看源码的时候仍然吃了不少苦头，近些时候，终于了解了代码的大致含义并借鉴大神们的代码自己用pytorch实现了一下。在此分享一下自己的心得。</p>
+        <p>最近一直在研究CV领域的一些算法，由于本人编程水平较弱加之faster rcnn算法比较复杂，虽然原理在很早就大致看懂，但在看源码的时候仍然吃了不少苦头，近些时候，终于了解了代码的大致含义并借鉴大神们的代码自己用pytorch实现了一下。在此，想跟大家详细地解释一下代码的含义， 帮助读者更好的理解这一算法。本人代码如下：</p>
+<p><a href="https://github.com/starcraft2chunjie/Faster-RCNN-pytorch/tree/master" target="_blank" rel="noopener">Faster-RCNN-pytorch</a></p>
+<p>需要先了解一下faster rcnn的读者可以点击以下链接，这是本人看到的比较全面细致的faster rcnn教程。</p>
+<p><a href="https://www.jianshu.com/p/de37451a0a77?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation" target="_blank" rel="noopener">Faster RCNN 详解</a></p>
+<h2 id="model"><a href="#model" class="headerlink" title="model"></a>model</h2><p>这一部分对应model_easy.py，我们知道, Faster RCNN 总共实际上就是四个模型，CNN模型， RPN(Region proposal layer), ROI Pooling layer, Classification layer(可以称为Faster RCNN层)。CNN层使用预训练的vgg16提取特征，得到feature map，然后进入RPN层, RPN层s首先经过一个kernel_size为3的层,之后再分为两部分，分别输出2<em>9大小和4</em>9大小的向量（对应于9 anchor <em> 2 classifier以及 9 anchor </em> 4 coordinate）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
 
