@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-03-10T11:06:33.814Z</updated>
+  <updated>2018-03-10T11:08:59.835Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="http://yoursite.com/2018/03/10/Evaluation-Standard/"/>
     <id>http://yoursite.com/2018/03/10/Evaluation-Standard/</id>
     <published>2018-03-10T11:01:50.000Z</published>
-    <updated>2018-03-10T11:06:33.814Z</updated>
+    <updated>2018-03-10T11:08:59.835Z</updated>
     
     <content type="html"><![CDATA[<h1 id="Evaluation-Standard"><a href="#Evaluation-Standard" class="headerlink" title="Evaluation Standard"></a>Evaluation Standard</h1><h3 id="Accurency-Precision-Recall-F1-ROC-AUC"><a href="#Accurency-Precision-Recall-F1-ROC-AUC" class="headerlink" title="Accurency/Precision/Recall/F1/ROC/AUC"></a>Accurency/Precision/Recall/F1/ROC/AUC</h3><h2 id="Accurency"><a href="#Accurency" class="headerlink" title="Accurency"></a>Accurency</h2><p>accurency = right / all (right: the instance you predict right, all； all sample)</p><h2 id="Precision-and-Recall-and-F1"><a href="#Precision-and-Recall-and-F1" class="headerlink" title="Precision and Recall and F1"></a>Precision and Recall and F1</h2><h3 id="1-confusion-matrix"><a href="#1-confusion-matrix" class="headerlink" title="1. confusion matrix"></a>1. confusion matrix</h3><p>TP: true positive   FN: false negative</p><p>FP: false positive   TP: True negative</p><h3 id="2-Precision"><a href="#2-Precision" class="headerlink" title="2. Precision"></a>2. Precision</h3><p>P = TP/(TP + FP)</p><p>It refers to the accurency rate of you prediction</p><h3 id="3-Recall"><a href="#3-Recall" class="headerlink" title="3. Recall"></a>3. Recall</h3><p>R = TP/(TP + FN)</p><p>It refers to the comprehensive rate of your prediction</p><h3 id="4-Precision-and-Recall’s-description"><a href="#4-Precision-and-Recall’s-description" class="headerlink" title="4. Precision and Recall’s description"></a>4. Precision and Recall’s description</h3><p>The Precision and Recall are often in conflict with each other, so if one P-R curve is completely wrapped by another, then we can assume that the latter is better.</p><h3 id="5-F1"><a href="#5-F1" class="headerlink" title="5. F1"></a>5. F1</h3><p>F1 is the harmonic mean of the precision and recall</p><p>definition: F1 = (2 <em> P </em> R)/(P + R)</p><p>If we want to give a weight to the each evaluation method, then we can use the β like this</p><p>F1 = (1 + β^2) <em> P </em> R/((β^2 * P) + B)</p><h3 id="6-extension-and-application"><a href="#6-extension-and-application" class="headerlink" title="6. extension and application"></a>6. extension and application</h3><p>Sometimes we some other situation:</p><ul><li>have trained and tested quite a few times and we get severial confusion matrix  </li><li>have trained and tested in different datasets, hoping to evaluate the algorithm as a whole</li><li>for Multi-category tasks, we combine each two category into a confusion matrix</li></ul><p>one method:</p><p>calculate each Precision and Recall in different confusion matrix and then calculate the mean of them(called macro-P, macro-R and macro-F1)</p><p>macro-P = 1/n <em> ∑P<br>macro-R = 1/n </em> ∑R<br>macro-F1 = (2 <em> macro-P </em> macro-R)/(macro-P + macro-R)</p><p>another method:</p><p>calculate the mean of TP, FP, FN, TN, then calculate the micro-P, micro-R and micro-F1</p><h2 id="ROC-and-AUC"><a href="#ROC-and-AUC" class="headerlink" title="ROC and AUC"></a>ROC and AUC</h2><p>So many learning model generate a value or probablity prediction and then compare it with the threshold. Then we cansort the value and get a cut point and divide the sample into two part. So the quality of sorting represent the ability of generalization, anfd we can use the ROC curve</p><p><img src="ROC.png" alt=""></p><p>If we assume that one marker is (x, y), then if the next sample is the true positive, then the coordinate of it is (x, y + 1/m+), and if it is false positive, then the coordinate of it is (x + 1/m-, y)</p><p>Just like above, if one learning model’s ROC curve is wrapped by the another, then the latter is better. Another method to measure is to compare the <em>Areas Under the ROC Curve</em>(<strong>AUC</strong>)</p><p>defintion: AUC = 1/2 ∑(xi+1 - xi) <em> (yi + yi+1)   </em>i from 1 to m-1*</p><p>AUC is the evaluationof the quality of prediction sorting, if we have m+ positive example and m- negative example, and D+ and D- represent positive and negative set, then we can define loss as:</p><p>lrank = 1/m+ <em> m- ∑ ∑ (II(f(x+) &lt; f(x-)) + 1/2 </em> II(f(x+) = f(x-)))</p><p>This means that if the positive prediction value is smaller than the negative, then you are punished by one point, the same as another. We can find that AUC = 1 - lrank</p>]]></content>
     
@@ -34,6 +34,10 @@
     
     </summary>
     
+      <category term="technology" scheme="http://yoursite.com/categories/technology/"/>
+    
+    
+      <category term="Machine learning" scheme="http://yoursite.com/tags/Machine-learning/"/>
     
   </entry>
   
