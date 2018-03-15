@@ -17,7 +17,7 @@
 <meta property="og:description" content="Evaluation StandardAccurency/Precision/Recall/F1/ROC/AUCAccurencyaccurency = right / all (right: the instance you predict right, all； all sample) Precision and Recall and F11. confusion matrixTP: true">
 <meta property="og:locale" content="Chinese">
 <meta property="og:image" content="http://yoursite.com/2018/03/10/Evaluation-Standard/ROC.png">
-<meta property="og:updated_time" content="2018-03-10T11:08:59.835Z">
+<meta property="og:updated_time" content="2018-03-15T19:11:33.655Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Evaluation Standard">
 <meta name="twitter:description" content="Evaluation StandardAccurency/Precision/Recall/F1/ROC/AUCAccurencyaccurency = right / all (right: the instance you predict right, all； all sample) Precision and Recall and F11. confusion matrixTP: true">
@@ -229,9 +229,10 @@
 <p>If we assume that one marker is (x, y), then if the next sample is the true positive, then the coordinate of it is (x, y + 1/m+), and if it is false positive, then the coordinate of it is (x + 1/m-, y)</p>
 <p>Just like above, if one learning model’s ROC curve is wrapped by the another, then the latter is better. Another method to measure is to compare the <em>Areas Under the ROC Curve</em>(<strong>AUC</strong>)</p>
 <p>defintion: AUC = 1/2 ∑(xi+1 - xi) <em> (yi + yi+1)   </em>i from 1 to m-1*</p>
-<p>AUC is the evaluationof the quality of prediction sorting, if we have m+ positive example and m- negative example, and D+ and D- represent positive and negative set, then we can define loss as:</p>
+<p>AUC is the evaluation of the quality of prediction sorting, if we have m+ positive example and m- negative example, and D+ and D- represent positive and negative set, then we can define loss as:</p>
 <p>lrank = 1/m+ <em> m- ∑ ∑ (II(f(x+) &lt; f(x-)) + 1/2 </em> II(f(x+) = f(x-)))</p>
 <p>This means that if the positive prediction value is smaller than the negative, then you are punished by one point, the same as another. We can find that AUC = 1 - lrank</p>
+<h2 id="mAP"><a href="#mAP" class="headerlink" title="mAP"></a>mAP</h2><p>mAP is often used in computer vision which means “mean average precision”. Suppose that we have ten true objects and then we can have ten recall objects, for every recall target, we choose the maximum precision among the index of target and later target as the precision of this recall target. Then we calculate the average of them as the average precision(<strong>AP</strong>), that’s for two categories, if we have multiple categories. then for every category and other categories viewed as one category, we also adopt this method and calculate the means(<strong>mean average precision</strong>).</p>
 
       
 
@@ -475,11 +476,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">CV</a>
+                <a href="javascript:void(0)" class="js-tag color2">Machine learning</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Machine learning</a>
+                <a href="javascript:void(0)" class="js-tag color3">CV</a>
               </li>
              
               <li class="article-tag-list-item">
