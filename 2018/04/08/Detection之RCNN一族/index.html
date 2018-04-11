@@ -16,20 +16,26 @@
 <meta property="og:site_name" content="artanis home">
 <meta property="og:description" content="Detection is an important part of computer vision. Today I will take a view at the prevail algorithm in detection areas, named RCNN and it’s extension.  RCNNRCNN’s meaning is region based CNN. Unlike">
 <meta property="og:locale" content="Chinese">
-<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture5.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture16.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture7.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture8.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture9.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture10.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture11.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture12.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture13.png">
-<meta property="og:updated_time" content="2018-04-11T15:25:19.432Z">
+<meta property="og:image" content="http://yoursite.com/images/Picture1.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture5.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture3.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture4.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture16.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture7.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture8.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture9.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture10.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture11.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture12.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture13.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture14.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture15.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture16.png">
+<meta property="og:updated_time" content="2018-04-11T19:20:28.957Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Detection之RCNN一族">
 <meta name="twitter:description" content="Detection is an important part of computer vision. Today I will take a view at the prevail algorithm in detection areas, named RCNN and it’s extension.  RCNNRCNN’s meaning is region based CNN. Unlike">
-<meta name="twitter:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture5.png">
+<meta name="twitter:image" content="http://yoursite.com/images/Picture1.png">
   
     <link rel="alternative" href="/atom.xml" title="artanis home" type="application/atom+xml">
   
@@ -217,35 +223,39 @@
 <li>put the feature map into the SVM binary classifier.</li>
 <li>put the feature map into the regressor to finetune</li>
 </ul>
-<p>The schemetic diagram is below:<br><img src="" alt=""></p>
+<p>The schemetic diagram is below:<br><img src="/images/Picture1.png" alt=""></p>
 <p>Note that RCNN is puting the every region into the network to train which consume a lot of time. Also note that RCNN had to first wrap resize every region into fixed size because FCN is required fixed-size input. So we will find the image to be a little geometric distortion.</p>
 <p>The training detail is: First we resize the image to 227 * 227, then we pretrain the image on the ILVCR(It has 1000 categories). Next we adopt domain-specific fine-tuning on the PASCAL VOC 2007(21 categories, 20 classes and 1 background). When we test, we put the layer of 4096 dimension into the SVM classifier and likewise we put the layer into the regression to compute the scaling and offset.</p>
 <p>RCNN is the foundation work of image detection using neural network. It still has a lot of drawbacks which will be solved in the next few algorthims.</p>
 <h2 id="SPPnet"><a href="#SPPnet" class="headerlink" title="SPPnet"></a>SPPnet</h2><p>SPPnet add a layer called spatial pyramid pooling layer. The pooling layer is like this:</p>
-<p><img src="Picture5.png" alt=""> </p>
+<p><img src="/images/Picture5.png" alt=""> </p>
 <p>Suppose we assume that the feature map is H <em> W size. Then we want to put the feature map into 4 </em> 4 so we need to manually regularize the stride to H/4 <em> W/4 and the kernel size of H/4 </em> W/4. Consequnently, the feature map is resized into 4 <em> 4. Likewise, the 2 </em> 2 and 1 * 1 feature map is generated. Then we flat and cluster them into one vector and sent it to the FCN. It plays the role of generate a fix-sized feature map.</p>
-<p>There exist quite a few advantages to use this method. Firstly, RCNN use wrapping to resize the region into fix-size feature map which will cause geometric distortion. And this method will avoid that kind of problem. Moreover, we don’t need to put every region into the network any more. We put the whole image into the network instead. We just need to know where the region is. Depending on this change, the running time is dramatically reduced. </p>
+<p>There exist quite a few advantages to use this method. Firstly, RCNN use wrapping to resize the region into fix-size feature map which will cause geometric distortion(like below). And this method will avoid that kind of problem. Moreover, we don’t need to put every region into the network any more. We put the whole image into the network instead. We just need to know where the region is. Depending on this change, the running time is dramatically reduced.(below)</p>
+<p><img src="/images/Picture3.png" alt=""><br><img src="/images/Picture4.png" alt=""></p>
 <h2 id="Fast-RCNN"><a href="#Fast-RCNN" class="headerlink" title="Fast RCNN"></a>Fast RCNN</h2><p>We know that RCNN and SPPnet has Multi-stage pipeline —— we need to put the final output into the SVM and then the regressor. Fast RCNN is born to handle the preblem. The trait of Fast RCNN is single-stage and multi-task. The schemetic diagram is below:</p>
-<p><img src="Picture16.png" alt=""></p>
+<p><img src="/images/Picture16.png" alt=""></p>
 <p>They use softmax to replace SVM because they find softmax is litter better than SVM in this task. We find that all tasks is compressed into one network. </p>
 <p>Another change is that they replace the spatial pyramid pooling layer with a ROI pooling layer(ROI : region of interest) which is a simplified version of SPP. They only use one scale like 7 <em> 7 instead of 4 </em> 4 + 2 * 2 + 1 because they experimented to find that complication brings no improvement.</p>
 <h2 id="Faster-RCNN"><a href="#Faster-RCNN" class="headerlink" title="Faster RCNN"></a>Faster RCNN</h2><p>The whole growing histroy we can summarize as a process of group all task into one single network. Faster RCNN contributes to moving the generate regions precess to the network where we call it RPN (Region Proposal Network). The overall proceeding is like this:</p>
-<p><img src="Picture7.png" alt=""></p>
+<p><img src="/images/Picture7.png" alt=""></p>
 <p>The detailed schemetic diagram is like this:</p>
-<p><img src="Picture8.png" alt=""></p>
+<p><img src="/images/Picture8.png" alt=""></p>
 <p>In order to generate appropriate proposals, we need to first define some fix-size and fix-location anchors by ourselves. we need to define different aspect ratio and different size so as to suit different object. The detail is like below:</p>
-<p><img src="Picture9.png" alt=""><br><img src="Picture10.png" alt=""></p>
+<p><img src="/images/Picture9.png" alt=""><br><img src="/images/Picture10.png" alt=""></p>
 <p>We need to explain some place in the picture 2. As we all know, for one feature map and for one pixel, it has a receptive field. If we project a pixel in the feature map somewhere to the raw image. This will be an area which we call grid ceil. For one grid ceil, we define k anchors. In this paper, we consider k as 9 in default. 2k means that for k anchor, there will be two categories, whether it has a object or not. 4k’s 4 means (x, y, w, h) for every anchor.</p>
 <p>Based on the explanation above, we can take a step forward. The detail RPN is like this:</p>
-<p><img src="Picture11.png" alt=""></p>
+<p><img src="/images/Picture11.png" alt=""></p>
 <p>The network above is a classification layer. And the third dimension is eighteen filters which is 2 <em> 9(k), 36 is the 4 </em> 9(k). We send all of this into the proposal layer which we include sorting, NMS, and sorting and NMS again(NMS : non maximum supression).</p>
 <h2 id="Mask-RCNN"><a href="#Mask-RCNN" class="headerlink" title="Mask RCNN"></a>Mask RCNN</h2><p>The main change to the Mask RCNN is below:</p>
-<p><img src="Picture12.png" alt=""></p>
+<p><img src="/images/Picture12.png" alt=""></p>
 <p>The network add a Lmask task in the final network and replace the ROI pooling with the ROI Align network. The network itself is also improved<br>on the basis of the some methods called ResNeXt-101 and FPN.</p>
 <p>ResNeXt-101 is an updated version of Resnet. The ResNet and ResNeXt-101’s structure is like below:</p>
-<p><img src="Picture13.png" alt=""></p>
+<p><img src="/images/Picture13.png" alt=""></p>
 <p>ResNet is a network to solve the draback of deep convolutional network. When the convolutional network is becoming deeper, the accuracy become lower. Because the deeper layer has the responsibility of predict the truth. So we can use the method of boosting tree. For one layer, we only predict the residual of them. For example, we  have the input x, and output is F(x), and the truth is T. If we want to compare the F(x) and T, the pressure is huge. But instead we can use F(x) to compare to the T - x, then it’s easier.  ResNet is a example of this. ResNeXt-101 is an improvement of it. ResNeXt-101 is inspired by the neurons. As we all know, neural network has many neurons which play the role of learn the different feature independetly. So the ResNet-101 use the method of split-transform-merge. The total 32 parts play the different role.</p>
-<p>FPN is born to handle the problem of difficulty of detecting small object. Suppose that a small object is 32 * 32, then if we have a network that has a smaller multiple of 32. Then the last feature map the object only has one pixel. In order to solve the problem, some papers like SSD use the method in the third picture. For the proceeding feature map, each has a predict value. But we know that for every feature map, it has the role of learning different semantics. Like the higher map learn the high semantics and the lower map learn the low semantics. It’s imappropriate to use different feature map to predict the result. So FPN(Feature pyramid network) change it. The lower feature map combine the trait of the higher feature map. But the upsample process has a lot of loss. So we need to use lateral connection —— combine the network before. </p>
+<p>FPN is born to handle the problem of difficulty of detecting small object. Suppose that a small object is 32 * 32, then if we have a network that has a smaller multiple of 32. Then the last feature map the object only has one pixel. In order to solve the problem, some papers like SSD use the method in the third picture. For the proceeding feature map, each has a predict value. But we know that for every feature map, it has the role of learning different semantics. Like the higher map learn the high semantics and the lower map learn the low semantics. It’s imappropriate to use different feature map to predict the result. So FPN(Feature pyramid network) change it. The lower feature map combine the trait of the higher feature map. But the upsample process has a lot of loss. So we need to use lateral connection —— combine the network before. The detil is as below:<br><img src="/images/Picture14.png" alt=""></p>
+<p>ROI Align solve the issue of misalignment. ROI pooling use the method of neareast neighbor interpolation. Suppose one region is 665 <em> 665, then after some steps of maxpooling, with a division of 32, the pixel is floating point which is impossible. Another point, using ROI pooling, if the size is 20 </em> 20, you want to the fix-size of 7 * 7. Then the stride is also floating point. if we just rouding, the loss will be huge.(See the picture) So ROI Align use the bilinear interpolation.(Picture below). It’s more scientific to use two dimension to rounding. </p>
+<p><img src="/images/Picture15.png" alt=""><br><img src="/images/Picture16.png" alt=""></p>
+<p>We don’t introduce mask, because it’s the area of semanic segmentation.</p>
 
       
 
@@ -489,15 +499,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Machine Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">CV</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">经济</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">日记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -505,11 +511,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Machine Learning</a>
+                <a href="javascript:void(0)" class="js-tag color2">machine learning</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">machine learning</a>
+                <a href="javascript:void(0)" class="js-tag color3">日记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">经济</a>
               </li>
             
             <div class="clearfix"></div>

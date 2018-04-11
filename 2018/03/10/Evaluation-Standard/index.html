@@ -16,12 +16,12 @@
 <meta property="og:site_name" content="artanis home">
 <meta property="og:description" content="Evaluation StandardAccurency/Precision/Recall/F1/ROC/AUCAccurencyaccurency = right / all (right: the instance you predict right, all； all sample) Precision and Recall and F11. confusion matrixTP: true">
 <meta property="og:locale" content="Chinese">
-<meta property="og:image" content="http://yoursite.com/2018/03/10/Evaluation-Standard/ROC.png">
-<meta property="og:updated_time" content="2018-03-15T19:11:33.655Z">
+<meta property="og:image" content="http://yoursite.com/images/ROC.png">
+<meta property="og:updated_time" content="2018-04-11T18:52:27.696Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Evaluation Standard">
 <meta name="twitter:description" content="Evaluation StandardAccurency/Precision/Recall/F1/ROC/AUCAccurencyaccurency = right / all (right: the instance you predict right, all； all sample) Precision and Recall and F11. confusion matrixTP: true">
-<meta name="twitter:image" content="http://yoursite.com/2018/03/10/Evaluation-Standard/ROC.png">
+<meta name="twitter:image" content="http://yoursite.com/images/ROC.png">
   
     <link rel="alternative" href="/atom.xml" title="artanis home" type="application/atom+xml">
   
@@ -225,7 +225,7 @@
 <p>another method:</p>
 <p>calculate the mean of TP, FP, FN, TN, then calculate the micro-P, micro-R and micro-F1</p>
 <h2 id="ROC-and-AUC"><a href="#ROC-and-AUC" class="headerlink" title="ROC and AUC"></a>ROC and AUC</h2><p>So many learning model generate a value or probablity prediction and then compare it with the threshold. Then we cansort the value and get a cut point and divide the sample into two part. So the quality of sorting represent the ability of generalization, anfd we can use the ROC curve</p>
-<p><img src="ROC.png" alt=""></p>
+<p><img src="/images/ROC.png" alt=""></p>
 <p>If we assume that one marker is (x, y), then if the next sample is the true positive, then the coordinate of it is (x, y + 1/m+), and if it is false positive, then the coordinate of it is (x + 1/m-, y)</p>
 <p>Just like above, if one learning model’s ROC curve is wrapped by the another, then the latter is better. Another method to measure is to compare the <em>Areas Under the ROC Curve</em>(<strong>AUC</strong>)</p>
 <p>defintion: AUC = 1/2 ∑(xi+1 - xi) <em> (yi + yi+1)   </em>i from 1 to m-1*</p>
@@ -485,15 +485,11 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Machine Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">CV</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">经济</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">日记</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -501,11 +497,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Machine Learning</a>
+                <a href="javascript:void(0)" class="js-tag color2">machine learning</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">machine learning</a>
+                <a href="javascript:void(0)" class="js-tag color3">日记</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">经济</a>
               </li>
             
             <div class="clearfix"></div>
