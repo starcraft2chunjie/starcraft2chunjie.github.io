@@ -6,22 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Evaluation Standard | artanis home</title>
+  <title>yolo演变史 | artanis home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Evaluation StandardAccurency/Precision/Recall/F1/ROC/AUCAccurencyaccurency = right / all (right: the instance you predict right, all； all sample) Precision and Recall and F11. confusion matrixTP: true">
-<meta name="keywords" content="Machine learning">
+  <meta name="description" content="yolo 9000yolo suffers from a variety of shortcomings such as high localization loss and low recall compared to region proposal-based methods. So yolo mainly focus on improving recall and localization">
+<meta name="keywords" content="machine learning">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Evaluation Standard">
-<meta property="og:url" content="http://yoursite.com/2018/03/10/Evaluation-Standard/index.html">
+<meta property="og:title" content="yolo演变史">
+<meta property="og:url" content="http://yoursite.com/2018/04/01/yolo演变史/index.html">
 <meta property="og:site_name" content="artanis home">
-<meta property="og:description" content="Evaluation StandardAccurency/Precision/Recall/F1/ROC/AUCAccurencyaccurency = right / all (right: the instance you predict right, all； all sample) Precision and Recall and F11. confusion matrixTP: true">
+<meta property="og:description" content="yolo 9000yolo suffers from a variety of shortcomings such as high localization loss and low recall compared to region proposal-based methods. So yolo mainly focus on improving recall and localization">
 <meta property="og:locale" content="Chinese">
-<meta property="og:image" content="http://yoursite.com/2018/03/10/Evaluation-Standard/ROC.png">
-<meta property="og:updated_time" content="2018-03-15T19:11:33.655Z">
+<meta property="og:updated_time" content="2018-04-01T17:59:48.086Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Evaluation Standard">
-<meta name="twitter:description" content="Evaluation StandardAccurency/Precision/Recall/F1/ROC/AUCAccurencyaccurency = right / all (right: the instance you predict right, all； all sample) Precision and Recall and F11. confusion matrixTP: true">
-<meta name="twitter:image" content="http://yoursite.com/2018/03/10/Evaluation-Standard/ROC.png">
+<meta name="twitter:title" content="yolo演变史">
+<meta name="twitter:description" content="yolo 9000yolo suffers from a variety of shortcomings such as high localization loss and low recall compared to region proposal-based methods. So yolo mainly focus on improving recall and localization">
   
     <link rel="alternative" href="/atom.xml" title="artanis home" type="application/atom+xml">
   
@@ -181,58 +179,43 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Evaluation-Standard" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-yolo演变史" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Evaluation Standard
+      yolo演变史
     </h1>
   
 
         
-        <a href="/2018/03/10/Evaluation-Standard/" class="archive-article-date">
-  	<time datetime="2018-03-10T11:01:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-10</time>
+        <a href="/2018/04/01/yolo演变史/" class="archive-article-date">
+  	<time datetime="2018-04-01T12:14:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-01</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Evaluation-Standard"><a href="#Evaluation-Standard" class="headerlink" title="Evaluation Standard"></a>Evaluation Standard</h1><h3 id="Accurency-Precision-Recall-F1-ROC-AUC"><a href="#Accurency-Precision-Recall-F1-ROC-AUC" class="headerlink" title="Accurency/Precision/Recall/F1/ROC/AUC"></a>Accurency/Precision/Recall/F1/ROC/AUC</h3><h2 id="Accurency"><a href="#Accurency" class="headerlink" title="Accurency"></a>Accurency</h2><p>accurency = right / all (right: the instance you predict right, all； all sample)</p>
-<h2 id="Precision-and-Recall-and-F1"><a href="#Precision-and-Recall-and-F1" class="headerlink" title="Precision and Recall and F1"></a>Precision and Recall and F1</h2><h3 id="1-confusion-matrix"><a href="#1-confusion-matrix" class="headerlink" title="1. confusion matrix"></a>1. confusion matrix</h3><p>TP: true positive   FN: false negative</p>
-<p>FP: false positive   TP: True negative</p>
-<h3 id="2-Precision"><a href="#2-Precision" class="headerlink" title="2. Precision"></a>2. Precision</h3><p>P = TP/(TP + FP)</p>
-<p>It refers to the accurency rate of you prediction</p>
-<h3 id="3-Recall"><a href="#3-Recall" class="headerlink" title="3. Recall"></a>3. Recall</h3><p>R = TP/(TP + FN)</p>
-<p>It refers to the comprehensive rate of your prediction</p>
-<h3 id="4-Precision-and-Recall’s-description"><a href="#4-Precision-and-Recall’s-description" class="headerlink" title="4. Precision and Recall’s description"></a>4. Precision and Recall’s description</h3><p>The Precision and Recall are often in conflict with each other, so if one P-R curve is completely wrapped by another, then we can assume that the latter is better.</p>
-<h3 id="5-F1"><a href="#5-F1" class="headerlink" title="5. F1"></a>5. F1</h3><p>F1 is the harmonic mean of the precision and recall</p>
-<p>definition: F1 = (2 <em> P </em> R)/(P + R)</p>
-<p>If we want to give a weight to the each evaluation method, then we can use the β like this</p>
-<p>F1 = (1 + β^2) <em> P </em> R/((β^2 * P) + B)</p>
-<h3 id="6-extension-and-application"><a href="#6-extension-and-application" class="headerlink" title="6. extension and application"></a>6. extension and application</h3><p>Sometimes we some other situation:</p>
+        <h2 id="yolo-9000"><a href="#yolo-9000" class="headerlink" title="yolo 9000"></a>yolo 9000</h2><p>yolo suffers from a variety of shortcomings such as high localization loss and low recall compared to region proposal-based methods. So yolo mainly focus on improving recall and localization while maintaining classification accuracy.</p>
+<p>yolo 9000 adopts some methods to better their model like:</p>
 <ul>
-<li>have trained and tested quite a few times and we get severial confusion matrix  </li>
-<li>have trained and tested in different datasets, hoping to evaluate the algorithm as a whole</li>
-<li>for Multi-category tasks, we combine each two category into a confusion matrix</li>
+<li><p>Batch Normalization: improve mAP, regularize the model, reduce the overfitting, and make weight initlization easier. 2% mAP</p>
+</li>
+<li><p>High Resolution Classifier: Unlike yolo, we first fine tune the classification network at the full 448*448 resolution and then the detection. </p>
+</li>
+<li><p>Using anchor box:  We know that yolo1 predicts the coordinates of bounding boxes directly using fully connected layers. While Faster RCNN predicts the offsets and confidences for anchor boxes using convolutional layers. So we adopt the anchor boxes method which predicts class and objectness for every anchor box. Note that this method wound be improved below.</p>
+</li>
+<li><p>Unlike Faster RCNN, we don’t use hand-picked priors. This means that we don’t define the width and hight manually but use k-means to learn the priors. We choose k = 5 as a tradeoff between model complexity and high recall. To avoid the imbalance between big boxes and small boxes, we redefine the disance matrix like : d = 1 - IOU(box, centroid). Here’s a code anaysis <a href="https://blog.csdn.net/hrsstudy/article/details/71173305" target="_blank" rel="noopener">k-means yolov2</a></p>
+</li>
+<li><p>Faster RCNN choose (tx, ty) to calculate the (x, y) like: </p>
+<p>  x = (tx * w) - X</p>
+<p>  y = (ty * w) - Y</p>
+<p>  the model is instable because a anchor can end up at any location </p>
+</li>
 </ul>
-<p>one method:</p>
-<p>calculate each Precision and Recall in different confusion matrix and then calculate the mean of them(called macro-P, macro-R and macro-F1)</p>
-<p>macro-P = 1/n <em> ∑P<br>macro-R = 1/n </em> ∑R<br>macro-F1 = (2 <em> macro-P </em> macro-R)/(macro-P + macro-R)</p>
-<p>another method:</p>
-<p>calculate the mean of TP, FP, FN, TN, then calculate the micro-P, micro-R and micro-F1</p>
-<h2 id="ROC-and-AUC"><a href="#ROC-and-AUC" class="headerlink" title="ROC and AUC"></a>ROC and AUC</h2><p>So many learning model generate a value or probablity prediction and then compare it with the threshold. Then we cansort the value and get a cut point and divide the sample into two part. So the quality of sorting represent the ability of generalization, anfd we can use the ROC curve</p>
-<p><img src="ROC.png" alt=""></p>
-<p>If we assume that one marker is (x, y), then if the next sample is the true positive, then the coordinate of it is (x, y + 1/m+), and if it is false positive, then the coordinate of it is (x + 1/m-, y)</p>
-<p>Just like above, if one learning model’s ROC curve is wrapped by the another, then the latter is better. Another method to measure is to compare the <em>Areas Under the ROC Curve</em>(<strong>AUC</strong>)</p>
-<p>defintion: AUC = 1/2 ∑(xi+1 - xi) <em> (yi + yi+1)   </em>i from 1 to m-1*</p>
-<p>AUC is the evaluation of the quality of prediction sorting, if we have m+ positive example and m- negative example, and D+ and D- represent positive and negative set, then we can define loss as:</p>
-<p>lrank = 1/m+ <em> m- ∑ ∑ (II(f(x+) &lt; f(x-)) + 1/2 </em> II(f(x+) = f(x-)))</p>
-<p>This means that if the positive prediction value is smaller than the negative, then you are punished by one point, the same as another. We can find that AUC = 1 - lrank</p>
-<h2 id="mAP"><a href="#mAP" class="headerlink" title="mAP"></a>mAP</h2><p>mAP is often used in computer vision which means “mean average precision”. Suppose that we have ten true objects and then we can have ten recall objects, for every recall target, we choose the maximum precision among the index of target and later target as the precision of this recall target. Then we calculate the average of them as the average precision(<strong>AP</strong>), that’s for two categories, if we have multiple categories. then for every category and other categories viewed as one category, we also adopt this method and calculate the means(<strong>mean average precision</strong>).</p>
 
       
 
@@ -246,7 +229,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Machine learning</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">machine learning</a>
         		</li>
       		
 		</ul>
@@ -313,7 +296,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/03/10/Evaluation-Standard/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/04/01/yolo演变史/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -327,18 +310,18 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/03/19/给自己的规矩/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2018/04/08/Detection之RCNN一族/" id="article-nav-newer" class="article-nav-link-wrap">
       <i class="icon-circle-left"></i>
       <div class="article-nav-title">
         
-          给自己的规矩
+          Detection之RCNN一族
         
       </div>
     </a>
   
   
-    <a href="/2018/03/06/读资本论/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">读资本论</div>
+    <a href="/2018/03/21/CTC原理及代码解析/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">CTC原理及代码解析</div>
       <i class="icon-circle-right"></i>
     </a>
   

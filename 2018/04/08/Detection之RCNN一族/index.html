@@ -6,22 +6,30 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Evaluation Standard | artanis home</title>
+  <title>Detection之RCNN一族 | artanis home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Evaluation StandardAccurency/Precision/Recall/F1/ROC/AUCAccurencyaccurency = right / all (right: the instance you predict right, all； all sample) Precision and Recall and F11. confusion matrixTP: true">
-<meta name="keywords" content="Machine learning">
+  <meta name="description" content="Detection is an important part of computer vision. Today I will take a view at the prevail algorithm in detection areas, named RCNN and it’s extension.  RCNNRCNN’s meaning is region based CNN. Unlike">
+<meta name="keywords" content="CV">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Evaluation Standard">
-<meta property="og:url" content="http://yoursite.com/2018/03/10/Evaluation-Standard/index.html">
+<meta property="og:title" content="Detection之RCNN一族">
+<meta property="og:url" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/index.html">
 <meta property="og:site_name" content="artanis home">
-<meta property="og:description" content="Evaluation StandardAccurency/Precision/Recall/F1/ROC/AUCAccurencyaccurency = right / all (right: the instance you predict right, all； all sample) Precision and Recall and F11. confusion matrixTP: true">
+<meta property="og:description" content="Detection is an important part of computer vision. Today I will take a view at the prevail algorithm in detection areas, named RCNN and it’s extension.  RCNNRCNN’s meaning is region based CNN. Unlike">
 <meta property="og:locale" content="Chinese">
-<meta property="og:image" content="http://yoursite.com/2018/03/10/Evaluation-Standard/ROC.png">
-<meta property="og:updated_time" content="2018-03-15T19:11:33.655Z">
+<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture5.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture16.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture7.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture8.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture9.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture10.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture11.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture12.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture13.png">
+<meta property="og:updated_time" content="2018-04-11T15:25:19.432Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Evaluation Standard">
-<meta name="twitter:description" content="Evaluation StandardAccurency/Precision/Recall/F1/ROC/AUCAccurencyaccurency = right / all (right: the instance you predict right, all； all sample) Precision and Recall and F11. confusion matrixTP: true">
-<meta name="twitter:image" content="http://yoursite.com/2018/03/10/Evaluation-Standard/ROC.png">
+<meta name="twitter:title" content="Detection之RCNN一族">
+<meta name="twitter:description" content="Detection is an important part of computer vision. Today I will take a view at the prevail algorithm in detection areas, named RCNN and it’s extension.  RCNNRCNN’s meaning is region based CNN. Unlike">
+<meta name="twitter:image" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/Picture5.png">
   
     <link rel="alternative" href="/atom.xml" title="artanis home" type="application/atom+xml">
   
@@ -181,58 +189,63 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Evaluation-Standard" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Detection之RCNN一族" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Evaluation Standard
+      Detection之RCNN一族
     </h1>
   
 
         
-        <a href="/2018/03/10/Evaluation-Standard/" class="archive-article-date">
-  	<time datetime="2018-03-10T11:01:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-03-10</time>
+        <a href="/2018/04/08/Detection之RCNN一族/" class="archive-article-date">
+  	<time datetime="2018-04-07T16:18:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-08</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Evaluation-Standard"><a href="#Evaluation-Standard" class="headerlink" title="Evaluation Standard"></a>Evaluation Standard</h1><h3 id="Accurency-Precision-Recall-F1-ROC-AUC"><a href="#Accurency-Precision-Recall-F1-ROC-AUC" class="headerlink" title="Accurency/Precision/Recall/F1/ROC/AUC"></a>Accurency/Precision/Recall/F1/ROC/AUC</h3><h2 id="Accurency"><a href="#Accurency" class="headerlink" title="Accurency"></a>Accurency</h2><p>accurency = right / all (right: the instance you predict right, all； all sample)</p>
-<h2 id="Precision-and-Recall-and-F1"><a href="#Precision-and-Recall-and-F1" class="headerlink" title="Precision and Recall and F1"></a>Precision and Recall and F1</h2><h3 id="1-confusion-matrix"><a href="#1-confusion-matrix" class="headerlink" title="1. confusion matrix"></a>1. confusion matrix</h3><p>TP: true positive   FN: false negative</p>
-<p>FP: false positive   TP: True negative</p>
-<h3 id="2-Precision"><a href="#2-Precision" class="headerlink" title="2. Precision"></a>2. Precision</h3><p>P = TP/(TP + FP)</p>
-<p>It refers to the accurency rate of you prediction</p>
-<h3 id="3-Recall"><a href="#3-Recall" class="headerlink" title="3. Recall"></a>3. Recall</h3><p>R = TP/(TP + FN)</p>
-<p>It refers to the comprehensive rate of your prediction</p>
-<h3 id="4-Precision-and-Recall’s-description"><a href="#4-Precision-and-Recall’s-description" class="headerlink" title="4. Precision and Recall’s description"></a>4. Precision and Recall’s description</h3><p>The Precision and Recall are often in conflict with each other, so if one P-R curve is completely wrapped by another, then we can assume that the latter is better.</p>
-<h3 id="5-F1"><a href="#5-F1" class="headerlink" title="5. F1"></a>5. F1</h3><p>F1 is the harmonic mean of the precision and recall</p>
-<p>definition: F1 = (2 <em> P </em> R)/(P + R)</p>
-<p>If we want to give a weight to the each evaluation method, then we can use the β like this</p>
-<p>F1 = (1 + β^2) <em> P </em> R/((β^2 * P) + B)</p>
-<h3 id="6-extension-and-application"><a href="#6-extension-and-application" class="headerlink" title="6. extension and application"></a>6. extension and application</h3><p>Sometimes we some other situation:</p>
+        <p>Detection is an important part of computer vision. Today I will take a view at the prevail algorithm in detection areas, named RCNN and it’s extension. </p>
+<h2 id="RCNN"><a href="#RCNN" class="headerlink" title="RCNN"></a>RCNN</h2><p>RCNN’s meaning is region based CNN. Unlike yolo and yolo9000, RCNN chose the region as the base of it’s predict bounding boxes. Finding that if we just use the location like x, y, then it’s hard to converge, because firsty there maybe exist a couple of objects and then the x, y have difficulty deciding which to approach. secondly, x,y has no limition and can appear in anywhere on the image. So RCNN use prechoosed region and then finetune the bounding boxes, actually compute the scaling and offset. The RCNN’s precess is like this:</p>
 <ul>
-<li>have trained and tested quite a few times and we get severial confusion matrix  </li>
-<li>have trained and tested in different datasets, hoping to evaluate the algorithm as a whole</li>
-<li>for Multi-category tasks, we combine each two category into a confusion matrix</li>
+<li>use some methods to generate regions(e.t.c selective search)</li>
+<li>adopt the CNN model to extract the feature.</li>
+<li>put the feature map into the SVM binary classifier.</li>
+<li>put the feature map into the regressor to finetune</li>
 </ul>
-<p>one method:</p>
-<p>calculate each Precision and Recall in different confusion matrix and then calculate the mean of them(called macro-P, macro-R and macro-F1)</p>
-<p>macro-P = 1/n <em> ∑P<br>macro-R = 1/n </em> ∑R<br>macro-F1 = (2 <em> macro-P </em> macro-R)/(macro-P + macro-R)</p>
-<p>another method:</p>
-<p>calculate the mean of TP, FP, FN, TN, then calculate the micro-P, micro-R and micro-F1</p>
-<h2 id="ROC-and-AUC"><a href="#ROC-and-AUC" class="headerlink" title="ROC and AUC"></a>ROC and AUC</h2><p>So many learning model generate a value or probablity prediction and then compare it with the threshold. Then we cansort the value and get a cut point and divide the sample into two part. So the quality of sorting represent the ability of generalization, anfd we can use the ROC curve</p>
-<p><img src="ROC.png" alt=""></p>
-<p>If we assume that one marker is (x, y), then if the next sample is the true positive, then the coordinate of it is (x, y + 1/m+), and if it is false positive, then the coordinate of it is (x + 1/m-, y)</p>
-<p>Just like above, if one learning model’s ROC curve is wrapped by the another, then the latter is better. Another method to measure is to compare the <em>Areas Under the ROC Curve</em>(<strong>AUC</strong>)</p>
-<p>defintion: AUC = 1/2 ∑(xi+1 - xi) <em> (yi + yi+1)   </em>i from 1 to m-1*</p>
-<p>AUC is the evaluation of the quality of prediction sorting, if we have m+ positive example and m- negative example, and D+ and D- represent positive and negative set, then we can define loss as:</p>
-<p>lrank = 1/m+ <em> m- ∑ ∑ (II(f(x+) &lt; f(x-)) + 1/2 </em> II(f(x+) = f(x-)))</p>
-<p>This means that if the positive prediction value is smaller than the negative, then you are punished by one point, the same as another. We can find that AUC = 1 - lrank</p>
-<h2 id="mAP"><a href="#mAP" class="headerlink" title="mAP"></a>mAP</h2><p>mAP is often used in computer vision which means “mean average precision”. Suppose that we have ten true objects and then we can have ten recall objects, for every recall target, we choose the maximum precision among the index of target and later target as the precision of this recall target. Then we calculate the average of them as the average precision(<strong>AP</strong>), that’s for two categories, if we have multiple categories. then for every category and other categories viewed as one category, we also adopt this method and calculate the means(<strong>mean average precision</strong>).</p>
+<p>The schemetic diagram is below:<br><img src="" alt=""></p>
+<p>Note that RCNN is puting the every region into the network to train which consume a lot of time. Also note that RCNN had to first wrap resize every region into fixed size because FCN is required fixed-size input. So we will find the image to be a little geometric distortion.</p>
+<p>The training detail is: First we resize the image to 227 * 227, then we pretrain the image on the ILVCR(It has 1000 categories). Next we adopt domain-specific fine-tuning on the PASCAL VOC 2007(21 categories, 20 classes and 1 background). When we test, we put the layer of 4096 dimension into the SVM classifier and likewise we put the layer into the regression to compute the scaling and offset.</p>
+<p>RCNN is the foundation work of image detection using neural network. It still has a lot of drawbacks which will be solved in the next few algorthims.</p>
+<h2 id="SPPnet"><a href="#SPPnet" class="headerlink" title="SPPnet"></a>SPPnet</h2><p>SPPnet add a layer called spatial pyramid pooling layer. The pooling layer is like this:</p>
+<p><img src="Picture5.png" alt=""> </p>
+<p>Suppose we assume that the feature map is H <em> W size. Then we want to put the feature map into 4 </em> 4 so we need to manually regularize the stride to H/4 <em> W/4 and the kernel size of H/4 </em> W/4. Consequnently, the feature map is resized into 4 <em> 4. Likewise, the 2 </em> 2 and 1 * 1 feature map is generated. Then we flat and cluster them into one vector and sent it to the FCN. It plays the role of generate a fix-sized feature map.</p>
+<p>There exist quite a few advantages to use this method. Firstly, RCNN use wrapping to resize the region into fix-size feature map which will cause geometric distortion. And this method will avoid that kind of problem. Moreover, we don’t need to put every region into the network any more. We put the whole image into the network instead. We just need to know where the region is. Depending on this change, the running time is dramatically reduced. </p>
+<h2 id="Fast-RCNN"><a href="#Fast-RCNN" class="headerlink" title="Fast RCNN"></a>Fast RCNN</h2><p>We know that RCNN and SPPnet has Multi-stage pipeline —— we need to put the final output into the SVM and then the regressor. Fast RCNN is born to handle the preblem. The trait of Fast RCNN is single-stage and multi-task. The schemetic diagram is below:</p>
+<p><img src="Picture16.png" alt=""></p>
+<p>They use softmax to replace SVM because they find softmax is litter better than SVM in this task. We find that all tasks is compressed into one network. </p>
+<p>Another change is that they replace the spatial pyramid pooling layer with a ROI pooling layer(ROI : region of interest) which is a simplified version of SPP. They only use one scale like 7 <em> 7 instead of 4 </em> 4 + 2 * 2 + 1 because they experimented to find that complication brings no improvement.</p>
+<h2 id="Faster-RCNN"><a href="#Faster-RCNN" class="headerlink" title="Faster RCNN"></a>Faster RCNN</h2><p>The whole growing histroy we can summarize as a process of group all task into one single network. Faster RCNN contributes to moving the generate regions precess to the network where we call it RPN (Region Proposal Network). The overall proceeding is like this:</p>
+<p><img src="Picture7.png" alt=""></p>
+<p>The detailed schemetic diagram is like this:</p>
+<p><img src="Picture8.png" alt=""></p>
+<p>In order to generate appropriate proposals, we need to first define some fix-size and fix-location anchors by ourselves. we need to define different aspect ratio and different size so as to suit different object. The detail is like below:</p>
+<p><img src="Picture9.png" alt=""><br><img src="Picture10.png" alt=""></p>
+<p>We need to explain some place in the picture 2. As we all know, for one feature map and for one pixel, it has a receptive field. If we project a pixel in the feature map somewhere to the raw image. This will be an area which we call grid ceil. For one grid ceil, we define k anchors. In this paper, we consider k as 9 in default. 2k means that for k anchor, there will be two categories, whether it has a object or not. 4k’s 4 means (x, y, w, h) for every anchor.</p>
+<p>Based on the explanation above, we can take a step forward. The detail RPN is like this:</p>
+<p><img src="Picture11.png" alt=""></p>
+<p>The network above is a classification layer. And the third dimension is eighteen filters which is 2 <em> 9(k), 36 is the 4 </em> 9(k). We send all of this into the proposal layer which we include sorting, NMS, and sorting and NMS again(NMS : non maximum supression).</p>
+<h2 id="Mask-RCNN"><a href="#Mask-RCNN" class="headerlink" title="Mask RCNN"></a>Mask RCNN</h2><p>The main change to the Mask RCNN is below:</p>
+<p><img src="Picture12.png" alt=""></p>
+<p>The network add a Lmask task in the final network and replace the ROI pooling with the ROI Align network. The network itself is also improved<br>on the basis of the some methods called ResNeXt-101 and FPN.</p>
+<p>ResNeXt-101 is an updated version of Resnet. The ResNet and ResNeXt-101’s structure is like below:</p>
+<p><img src="Picture13.png" alt=""></p>
+<p>ResNet is a network to solve the draback of deep convolutional network. When the convolutional network is becoming deeper, the accuracy become lower. Because the deeper layer has the responsibility of predict the truth. So we can use the method of boosting tree. For one layer, we only predict the residual of them. For example, we  have the input x, and output is F(x), and the truth is T. If we want to compare the F(x) and T, the pressure is huge. But instead we can use F(x) to compare to the T - x, then it’s easier.  ResNet is a example of this. ResNeXt-101 is an improvement of it. ResNeXt-101 is inspired by the neurons. As we all know, neural network has many neurons which play the role of learn the different feature independetly. So the ResNet-101 use the method of split-transform-merge. The total 32 parts play the different role.</p>
+<p>FPN is born to handle the problem of difficulty of detecting small object. Suppose that a small object is 32 * 32, then if we have a network that has a smaller multiple of 32. Then the last feature map the object only has one pixel. In order to solve the problem, some papers like SSD use the method in the third picture. For the proceeding feature map, each has a predict value. But we know that for every feature map, it has the role of learning different semantics. Like the higher map learn the high semantics and the lower map learn the low semantics. It’s imappropriate to use different feature map to predict the result. So FPN(Feature pyramid network) change it. The lower feature map combine the trait of the higher feature map. But the upsample process has a lot of loss. So we need to use lateral connection —— combine the network before. </p>
 
       
 
@@ -246,7 +259,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color2">Machine learning</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CV</a>
         		</li>
       		
 		</ul>
@@ -313,7 +326,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/03/10/Evaluation-Standard/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/04/08/Detection之RCNN一族/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -327,18 +340,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/03/19/给自己的规矩/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          给自己的规矩
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/03/06/读资本论/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">读资本论</div>
+    <a href="/2018/04/01/yolo演变史/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">yolo演变史</div>
       <i class="icon-circle-right"></i>
     </a>
   
