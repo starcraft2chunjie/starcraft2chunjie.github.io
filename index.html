@@ -217,7 +217,7 @@
 <p>There exist quite a few advantages to use this method. Firstly, RCNN use wrapping to resize the region into fix-size feature map which will cause geometric distortion(like below). And this method will avoid that kind of problem. Moreover, we don’t need to put every region into the network any more. We put the whole image into the network instead. We just need to know where the region is. Depending on this change, the running time is dramatically reduced.(below)</p>
 <p><img src="/images/Picture3.png" alt=""><br><img src="/images/Picture4.png" alt=""></p>
 <h2 id="Fast-RCNN"><a href="#Fast-RCNN" class="headerlink" title="Fast RCNN"></a>Fast RCNN</h2><p>We know that RCNN and SPPnet has Multi-stage pipeline —— we need to put the final output into the SVM and then the regressor. Fast RCNN is born to handle the preblem. The trait of Fast RCNN is single-stage and multi-task. The schemetic diagram is below:</p>
-<p><img src="/images/Picture16.png" alt=""></p>
+<p><img src="/images/Picture16png.png" alt=""></p>
 <p>They use softmax to replace SVM because they find softmax is litter better than SVM in this task. We find that all tasks is compressed into one network. </p>
 <p>Another change is that they replace the spatial pyramid pooling layer with a ROI pooling layer(ROI : region of interest) which is a simplified version of SPP. They only use one scale like 7 <em> 7 instead of 4 </em> 4 + 2 * 2 + 1 because they experimented to find that complication brings no improvement.</p>
 <h2 id="Faster-RCNN"><a href="#Faster-RCNN" class="headerlink" title="Faster RCNN"></a>Faster RCNN</h2><p>The whole growing histroy we can summarize as a process of group all task into one single network. Faster RCNN contributes to moving the generate regions precess to the network where we call it RPN (Region Proposal Network). The overall proceeding is like this:</p>
@@ -441,7 +441,7 @@
 <p>通过以上解释，数组的初始化也应该说得通了。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">nt e_counter = 0;</span><br><span class="line">int s_counter = 0;</span><br><span class="line"></span><br><span class="line">s_inc[s_counter++] = 1;</span><br><span class="line"></span><br><span class="line">int repeats = 0;</span><br><span class="line"></span><br><span class="line">for (int i = 1; i &lt; L; ++i) &#123;</span><br><span class="line">    if (labels[i-1] == labels[i]) &#123;</span><br><span class="line">        s_inc[s_counter++] = 1;</span><br><span class="line">        s_inc[s_counter++] = 1;</span><br><span class="line">        e_inc[e_counter++] = 1;</span><br><span class="line">        e_inc[e_counter++] = 1;</span><br><span class="line">        ++repeats;</span><br><span class="line">    &#125;</span><br><span class="line">    else &#123;</span><br><span class="line">        s_inc[s_counter++] = 2;</span><br><span class="line">        e_inc[e_counter++] = 2;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">e_inc[e_counter++] = 1;</span><br></pre></td></tr></table></figure></p>
 <h1 id="更新-2018-3-24"><a href="#更新-2018-3-24" class="headerlink" title="更新 2018.3.24"></a>更新 2018.3.24</h1><p>之前的是对CTC原理中动态规划部分的主要解释，今天我们来讲一讲它就是如何应用到RNN中去的。为了方便，我将采用CRNN模型，<a href="https://arxiv.org/abs/1507.05717" target="_blank" rel="noopener">论文地址</a>。</p>
 <p>了解CRNN后知道，CRNN的输出是一个序列y = y1, y2, y3, … yT, 其中yt是一个字母表+空白的概率分布，我们定义π是y的其中一种情况(path)，定义一个函数(Sequqnce to Sequence)B，B(π)是产生一个标签(label)，比如B(–he–l-l–oo-)是hello，我们假设真实标签是l， 那么在训练的时候，我们首先需要求出输入在进入CTC之后，所产生的输出是l的概率，也就是条件概率。如图所示:</p>
-<p><img src="math1.png" alt=""></p>
+<p><img src="/images/math1.png" alt=""></p>
 <p>根据这个概率，我们可以采用negative log-likelihood来计算损失函数，从而bp和optimize。这里面，p(π|y) = Π(yt(πt)),如果直接计算p(π|y)当然非常复杂，所以CTC采用了动态规划的思想，也就是我上面介绍的内容。</p>
 
       
@@ -1078,11 +1078,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Machine learning</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">machine learning</a>
+                <a href="javascript:void(0)" class="js-tag color3">经济</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -1090,7 +1086,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">经济</a>
+                <a href="javascript:void(0)" class="js-tag color2">machine learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Machine learning</a>
               </li>
             
             <div class="clearfix"></div>

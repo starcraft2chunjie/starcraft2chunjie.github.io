@@ -20,7 +20,7 @@
 <meta property="og:image" content="http://yoursite.com/images/Picture5.png">
 <meta property="og:image" content="http://yoursite.com/images/Picture3.png">
 <meta property="og:image" content="http://yoursite.com/images/Picture4.png">
-<meta property="og:image" content="http://yoursite.com/images/Picture16.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture16png.png">
 <meta property="og:image" content="http://yoursite.com/images/Picture7.png">
 <meta property="og:image" content="http://yoursite.com/images/Picture8.png">
 <meta property="og:image" content="http://yoursite.com/images/Picture9.png">
@@ -31,7 +31,7 @@
 <meta property="og:image" content="http://yoursite.com/images/Picture14.png">
 <meta property="og:image" content="http://yoursite.com/images/Picture15.png">
 <meta property="og:image" content="http://yoursite.com/images/Picture16.png">
-<meta property="og:updated_time" content="2018-04-11T19:20:28.957Z">
+<meta property="og:updated_time" content="2018-04-12T15:10:38.522Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Detection之RCNN一族">
 <meta name="twitter:description" content="Detection is an important part of computer vision. Today I will take a view at the prevail algorithm in detection areas, named RCNN and it’s extension.  RCNNRCNN’s meaning is region based CNN. Unlike">
@@ -233,7 +233,7 @@
 <p>There exist quite a few advantages to use this method. Firstly, RCNN use wrapping to resize the region into fix-size feature map which will cause geometric distortion(like below). And this method will avoid that kind of problem. Moreover, we don’t need to put every region into the network any more. We put the whole image into the network instead. We just need to know where the region is. Depending on this change, the running time is dramatically reduced.(below)</p>
 <p><img src="/images/Picture3.png" alt=""><br><img src="/images/Picture4.png" alt=""></p>
 <h2 id="Fast-RCNN"><a href="#Fast-RCNN" class="headerlink" title="Fast RCNN"></a>Fast RCNN</h2><p>We know that RCNN and SPPnet has Multi-stage pipeline —— we need to put the final output into the SVM and then the regressor. Fast RCNN is born to handle the preblem. The trait of Fast RCNN is single-stage and multi-task. The schemetic diagram is below:</p>
-<p><img src="/images/Picture16.png" alt=""></p>
+<p><img src="/images/Picture16png.png" alt=""></p>
 <p>They use softmax to replace SVM because they find softmax is litter better than SVM in this task. We find that all tasks is compressed into one network. </p>
 <p>Another change is that they replace the spatial pyramid pooling layer with a ROI pooling layer(ROI : region of interest) which is a simplified version of SPP. They only use one scale like 7 <em> 7 instead of 4 </em> 4 + 2 * 2 + 1 because they experimented to find that complication brings no improvement.</p>
 <h2 id="Faster-RCNN"><a href="#Faster-RCNN" class="headerlink" title="Faster RCNN"></a>Faster RCNN</h2><p>The whole growing histroy we can summarize as a process of group all task into one single network. Faster RCNN contributes to moving the generate regions precess to the network where we call it RPN (Region Proposal Network). The overall proceeding is like this:</p>
@@ -507,11 +507,7 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Machine learning</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">machine learning</a>
+                <a href="javascript:void(0)" class="js-tag color3">经济</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -519,7 +515,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">经济</a>
+                <a href="javascript:void(0)" class="js-tag color2">machine learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Machine learning</a>
               </li>
             
             <div class="clearfix"></div>
