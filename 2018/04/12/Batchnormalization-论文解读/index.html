@@ -15,18 +15,18 @@
 <meta property="og:site_name" content="artanis home">
 <meta property="og:description" content="训练深度神经网络的时候经常会出现的问题是在每次训练的时候输入的数据发生一丝微小的改变，会改变之后的所有层，并且层数越深影响越大。也可以说当输入的分布发生变化，网络就不得不再去适应新的数据分布。这会导致一个模型非常难训练出来。一旦训练速率与参数初始化不恰当，模型就不会收敛。这个现象被称之为covariate shift。并且，对于每一个网络层输入的变化都会产生covariate shift 的现象，">
 <meta property="og:locale" content="Chinese">
-<meta property="og:image" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/1.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/Picture20.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/Picture21.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/Picture22.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/Picture23.png">
-<meta property="og:image" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/2.jpg">
-<meta property="og:image" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/3.jpg">
-<meta property="og:updated_time" content="2018-04-14T13:50:10.136Z">
+<meta property="og:image" content="http://yoursite.com/images/1.jpg">
+<meta property="og:image" content="http://yoursite.com/images/Picture20.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture21.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture22.png">
+<meta property="og:image" content="http://yoursite.com/images/Picture23.png">
+<meta property="og:image" content="http://yoursite.com/images/2.jpg">
+<meta property="og:image" content="http://yoursite.com/images/3.jpg">
+<meta property="og:updated_time" content="2018-04-14T13:54:03.147Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Batchnormalization 论文解读">
 <meta name="twitter:description" content="训练深度神经网络的时候经常会出现的问题是在每次训练的时候输入的数据发生一丝微小的改变，会改变之后的所有层，并且层数越深影响越大。也可以说当输入的分布发生变化，网络就不得不再去适应新的数据分布。这会导致一个模型非常难训练出来。一旦训练速率与参数初始化不恰当，模型就不会收敛。这个现象被称之为covariate shift。并且，对于每一个网络层输入的变化都会产生covariate shift 的现象，">
-<meta name="twitter:image" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/1.jpg">
+<meta name="twitter:image" content="http://yoursite.com/images/1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="artanis home" type="application/atom+xml">
   
@@ -211,26 +211,26 @@
 <p>有两个方法简化计算，一个是讲每个特征当做是独立随机变量单独进行规范化，这样就不存在协方差矩阵。另一个是在每个mini-batch中计算mini-batch和variance来代替整个数据集的mini-batch和variance.因为对于mini-batch gradient decent，计算整个数据集的mini-batch和variance是不切实际的。</p>
 <p>如果仅仅将每一层的输入都进行规范化，那么会改变原先这一层的表达能力，比如本来有两个值，一个在sigmoid函数的线性区域，一个在sigmoid函数的非线性区域，进行规范化后两个值就都作用在了sigmoid函数的线性区域了，原来sigmoid函数的表达能力就没有了。所以加上了一对参数γ和β，来scale和shift规范化的值。</p>
 <p>为什么Batch Normalization会解决数据分布的问题以及梯度弥散的问题? 首先看数据分布的问题，一般数据z之间都是互相关的，拿二维的数据进行举例，假设第一次输入的数据都是主要都是在第一象限。</p>
-<p><img src="1.jpg" alt=""></p>
+<p><img src="/images/1.jpg" alt=""></p>
 <p>在之后经过每一层的操作之后，数据分布都会发生变化，如果网络足够深的话，后面几层的网络接受的输入分布会与之前的数据分布完全不一样。我们希望数据的分布最好是稳定的。所以我应用Batch normalization。使得每次输出的数据都是在四个象限比较均匀的分布。这样数据就会相对的稳定。</p>
 <p>再看解决梯度弥散或者梯度爆炸的问题, 前向传播的时候有：</p>
-<p><img src="Picture20.png" alt=""></p>
+<p><img src="/images/Picture20.png" alt=""></p>
 <p>反向传播的时候有：</p>
-<p><img src="Picture21.png" alt=""></p>
+<p><img src="/images/Picture21.png" alt=""></p>
 <p>从l层传播到k层则有:</p>
-<p><img src="Picture22.png" alt=""></p>
+<p><img src="/images/Picture22.png" alt=""></p>
 <p>如果w大多小于1, 则会产生极小的梯度，如果w大多大于1则会相反。所以使用Batch normalization来解决这个问题。</p>
 <p>首先：</p>
-<p><img src="Picture23.png" alt=""></p>
+<p><img src="/images/Picture23.png" alt=""></p>
 <p>反向传导的时候便有：</p>
-<p><img src="2.jpg" alt=""></p>
+<p><img src="/images/2.jpg" alt=""></p>
 <p>第一个式子指的是：对于无论w多大，对梯度流都有影响。第二个式子指的是，w越大，产生的更新越小，有了这两个特点的保证，就可以保证w的更新更加稳定。</p>
 <p>对其本质的思考，训练其实是训练模型的表达能力，区分不同的数据分布，所以，模型会越来越深，表达能力越来越好，但是，模型过深，会产生许多问题，比如数据分布的细微变化，参数细微的变化就会导致后续巨大的变化，导致过拟合，模型的泛化能力很弱，所以，对许多层的数据加入归一化，使得数据分布变化不会那么大，后续模型参数变化也不会过大，但是这样模型的表达能力就变弱了。所以加入γ与β，通过训练γ与β，达到表达能力与泛化能力之间的很好的平衡。</p>
 <p>下面是一些检测自己是否理解了Batch Normalization的问题，有兴趣的读者可以看了回忆一下。</p>
 <p>问题一：Batchnormalization中说的把每个特征单独做规范化中的每个特征在CNN中是指的什么，batchsize中的m在CNN中指的是什么？</p>
 <p>问题二：CNN中做Batchnormalization z = g(BN(Wu))</p>
 <p>问题三：为什么要加γ和β的偏置。</p>
-<p><img src="3.jpg" alt=""></p>
+<p><img src="/images/3.jpg" alt=""></p>
 <p>问题四：白化的偏导为什么计算量比较大并且某些地方不可微。</p>
 <p>问题五：Batchnormalization 放在哪边</p>
 <p>问题六：internal covariate shift</p>
