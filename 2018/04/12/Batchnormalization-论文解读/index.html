@@ -6,36 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Detection之RCNN一族 | artanis home</title>
+  <title>Batchnormalization 论文解读 | artanis home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Detection is an important part of computer vision. Today I will take a view at the prevail algorithm in detection areas, named RCNN and it’s extension.  RCNNRCNN’s meaning is region based CNN. Unlike">
-<meta name="keywords" content="CV">
+  <meta name="description" content="训练深度神经网络的时候经常会出现的问题是在每次训练的时候输入的数据发生一丝微小的改变，会改变之后的所有层，并且层数越深影响越大。也可以说当输入的分布发生变化，网络就不得不再去适应新的数据分布。这会导致一个模型非常难训练出来。一旦训练速率与参数初始化不恰当，模型就不会收敛。这个现象被称之为covariate shift。并且，对于每一个网络层输入的变化都会产生covariate shift 的现象，">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Detection之RCNN一族">
-<meta property="og:url" content="http://yoursite.com/2018/04/08/Detection之RCNN一族/index.html">
+<meta property="og:title" content="Batchnormalization 论文解读">
+<meta property="og:url" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/index.html">
 <meta property="og:site_name" content="artanis home">
-<meta property="og:description" content="Detection is an important part of computer vision. Today I will take a view at the prevail algorithm in detection areas, named RCNN and it’s extension.  RCNNRCNN’s meaning is region based CNN. Unlike">
+<meta property="og:description" content="训练深度神经网络的时候经常会出现的问题是在每次训练的时候输入的数据发生一丝微小的改变，会改变之后的所有层，并且层数越深影响越大。也可以说当输入的分布发生变化，网络就不得不再去适应新的数据分布。这会导致一个模型非常难训练出来。一旦训练速率与参数初始化不恰当，模型就不会收敛。这个现象被称之为covariate shift。并且，对于每一个网络层输入的变化都会产生covariate shift 的现象，">
 <meta property="og:locale" content="Chinese">
-<meta property="og:image" content="http://yoursite.com/images/Picture1.png">
-<meta property="og:image" content="http://yoursite.com/images/Picture5.png">
-<meta property="og:image" content="http://yoursite.com/images/Picture3.png">
-<meta property="og:image" content="http://yoursite.com/images/Picture4.png">
-<meta property="og:image" content="http://yoursite.com/images/Picture16png.png">
-<meta property="og:image" content="http://yoursite.com/images/Picture7.png">
-<meta property="og:image" content="http://yoursite.com/images/Picture8.png">
-<meta property="og:image" content="http://yoursite.com/images/Picture9.png">
-<meta property="og:image" content="http://yoursite.com/images/Picture10.png">
-<meta property="og:image" content="http://yoursite.com/images/Picture11.png">
-<meta property="og:image" content="http://yoursite.com/images/Picture12.png">
-<meta property="og:image" content="http://yoursite.com/images/Picture13.png">
-<meta property="og:image" content="http://yoursite.com/images/Picture14.png">
-<meta property="og:image" content="http://yoursite.com/images/Picture15.png">
-<meta property="og:image" content="http://yoursite.com/images/Picture16.png">
-<meta property="og:updated_time" content="2018-04-12T15:10:38.522Z">
+<meta property="og:image" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/1.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/Picture20.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/Picture21.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/Picture22.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/Picture23.png">
+<meta property="og:image" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/2.jpg">
+<meta property="og:image" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/3.jpg">
+<meta property="og:updated_time" content="2018-04-14T13:50:10.136Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Detection之RCNN一族">
-<meta name="twitter:description" content="Detection is an important part of computer vision. Today I will take a view at the prevail algorithm in detection areas, named RCNN and it’s extension.  RCNNRCNN’s meaning is region based CNN. Unlike">
-<meta name="twitter:image" content="http://yoursite.com/images/Picture1.png">
+<meta name="twitter:title" content="Batchnormalization 论文解读">
+<meta name="twitter:description" content="训练深度神经网络的时候经常会出现的问题是在每次训练的时候输入的数据发生一丝微小的改变，会改变之后的所有层，并且层数越深影响越大。也可以说当输入的分布发生变化，网络就不得不再去适应新的数据分布。这会导致一个模型非常难训练出来。一旦训练速率与参数初始化不恰当，模型就不会收敛。这个现象被称之为covariate shift。并且，对于每一个网络层输入的变化都会产生covariate shift 的现象，">
+<meta name="twitter:image" content="http://yoursite.com/2018/04/12/Batchnormalization-论文解读/1.jpg">
   
     <link rel="alternative" href="/atom.xml" title="artanis home" type="application/atom+xml">
   
@@ -195,67 +186,57 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Detection之RCNN一族" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-Batchnormalization-论文解读" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Detection之RCNN一族
+      Batchnormalization 论文解读
     </h1>
   
 
         
-        <a href="/2018/04/08/Detection之RCNN一族/" class="archive-article-date">
-  	<time datetime="2018-04-07T16:18:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-08</time>
+        <a href="/2018/04/12/Batchnormalization-论文解读/" class="archive-article-date">
+  	<time datetime="2018-04-12T15:20:56.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-04-12</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Detection is an important part of computer vision. Today I will take a view at the prevail algorithm in detection areas, named RCNN and it’s extension. </p>
-<h2 id="RCNN"><a href="#RCNN" class="headerlink" title="RCNN"></a>RCNN</h2><p>RCNN’s meaning is region based CNN. Unlike yolo and yolo9000, RCNN chose the region as the base of it’s predict bounding boxes. Finding that if we just use the location like x, y, then it’s hard to converge, because firsty there maybe exist a couple of objects and then the x, y have difficulty deciding which to approach. secondly, x,y has no limition and can appear in anywhere on the image. So RCNN use prechoosed region and then finetune the bounding boxes, actually compute the scaling and offset. The RCNN’s precess is like this:</p>
-<ul>
-<li>use some methods to generate regions(e.t.c selective search)</li>
-<li>adopt the CNN model to extract the feature.</li>
-<li>put the feature map into the SVM binary classifier.</li>
-<li>put the feature map into the regressor to finetune</li>
-</ul>
-<p>The schemetic diagram is below:<br><img src="/images/Picture1.png" alt=""></p>
-<p>Note that RCNN is puting the every region into the network to train which consume a lot of time. Also note that RCNN had to first wrap resize every region into fixed size because FCN is required fixed-size input. So we will find the image to be a little geometric distortion.</p>
-<p>The training detail is: First we resize the image to 227 * 227, then we pretrain the image on the ILVCR(It has 1000 categories). Next we adopt domain-specific fine-tuning on the PASCAL VOC 2007(21 categories, 20 classes and 1 background). When we test, we put the layer of 4096 dimension into the SVM classifier and likewise we put the layer into the regression to compute the scaling and offset.</p>
-<p>RCNN is the foundation work of image detection using neural network. It still has a lot of drawbacks which will be solved in the next few algorthims.</p>
-<h2 id="SPPnet"><a href="#SPPnet" class="headerlink" title="SPPnet"></a>SPPnet</h2><p>SPPnet add a layer called spatial pyramid pooling layer. The pooling layer is like this:</p>
-<p><img src="/images/Picture5.png" alt=""> </p>
-<p>Suppose we assume that the feature map is H <em> W size. Then we want to put the feature map into 4 </em> 4 so we need to manually regularize the stride to H/4 <em> W/4 and the kernel size of H/4 </em> W/4. Consequnently, the feature map is resized into 4 <em> 4. Likewise, the 2 </em> 2 and 1 * 1 feature map is generated. Then we flat and cluster them into one vector and sent it to the FCN. It plays the role of generate a fix-sized feature map.</p>
-<p>There exist quite a few advantages to use this method. Firstly, RCNN use wrapping to resize the region into fix-size feature map which will cause geometric distortion(like below). And this method will avoid that kind of problem. Moreover, we don’t need to put every region into the network any more. We put the whole image into the network instead. We just need to know where the region is. Depending on this change, the running time is dramatically reduced.(below)</p>
-<p><img src="/images/Picture3.png" alt=""><br><img src="/images/Picture4.png" alt=""></p>
-<h2 id="Fast-RCNN"><a href="#Fast-RCNN" class="headerlink" title="Fast RCNN"></a>Fast RCNN</h2><p>We know that RCNN and SPPnet has Multi-stage pipeline —— we need to put the final output into the SVM and then the regressor. Fast RCNN is born to handle the preblem. The trait of Fast RCNN is single-stage and multi-task. The schemetic diagram is below:</p>
-<p><img src="/images/Picture16png.png" alt=""></p>
-<p>They use softmax to replace SVM because they find softmax is litter better than SVM in this task. We find that all tasks is compressed into one network. </p>
-<p>Another change is that they replace the spatial pyramid pooling layer with a ROI pooling layer(ROI : region of interest) which is a simplified version of SPP. They only use one scale like 7 <em> 7 instead of 4 </em> 4 + 2 * 2 + 1 because they experimented to find that complication brings no improvement.</p>
-<h2 id="Faster-RCNN"><a href="#Faster-RCNN" class="headerlink" title="Faster RCNN"></a>Faster RCNN</h2><p>The whole growing histroy we can summarize as a process of group all task into one single network. Faster RCNN contributes to moving the generate regions precess to the network where we call it RPN (Region Proposal Network). The overall proceeding is like this:</p>
-<p><img src="/images/Picture7.png" alt=""></p>
-<p>The detailed schemetic diagram is like this:</p>
-<p><img src="/images/Picture8.png" alt=""></p>
-<p>In order to generate appropriate proposals, we need to first define some fix-size and fix-location anchors by ourselves. we need to define different aspect ratio and different size so as to suit different object. The detail is like below:</p>
-<p><img src="/images/Picture9.png" alt=""><br><img src="/images/Picture10.png" alt=""></p>
-<p>We need to explain some place in the picture 2. As we all know, for one feature map and for one pixel, it has a receptive field. If we project a pixel in the feature map somewhere to the raw image. This will be an area which we call grid ceil. For one grid ceil, we define k anchors. In this paper, we consider k as 9 in default. 2k means that for k anchor, there will be two categories, whether it has a object or not. 4k’s 4 means (x, y, w, h) for every anchor.</p>
-<p>Based on the explanation above, we can take a step forward. The detail RPN is like this:</p>
-<p><img src="/images/Picture11.png" alt=""></p>
-<p>The network above is a classification layer. And the third dimension is eighteen filters which is 2 <em> 9(k), 36 is the 4 </em> 9(k). We send all of this into the proposal layer which we include sorting, NMS, and sorting and NMS again(NMS : non maximum supression).</p>
-<h2 id="Mask-RCNN"><a href="#Mask-RCNN" class="headerlink" title="Mask RCNN"></a>Mask RCNN</h2><p>The main change to the Mask RCNN is below:</p>
-<p><img src="/images/Picture12.png" alt=""></p>
-<p>The network add a Lmask task in the final network and replace the ROI pooling with the ROI Align network. The network itself is also improved<br>on the basis of the some methods called ResNeXt-101 and FPN.</p>
-<p>ResNeXt-101 is an updated version of Resnet. The ResNet and ResNeXt-101’s structure is like below:</p>
-<p><img src="/images/Picture13.png" alt=""></p>
-<p>ResNet is a network to solve the draback of deep convolutional network. When the convolutional network is becoming deeper, the accuracy become lower. Because the deeper layer has the responsibility of predict the truth. So we can use the method of boosting tree. For one layer, we only predict the residual of them. For example, we  have the input x, and output is F(x), and the truth is T. If we want to compare the F(x) and T, the pressure is huge. But instead we can use F(x) to compare to the T - x, then it’s easier.  ResNet is a example of this. ResNeXt-101 is an improvement of it. ResNeXt-101 is inspired by the neurons. As we all know, neural network has many neurons which play the role of learn the different feature independetly. So the ResNet-101 use the method of split-transform-merge. The total 32 parts play the different role.</p>
-<p>FPN is born to handle the problem of difficulty of detecting small object. Suppose that a small object is 32 * 32, then if we have a network that has a smaller multiple of 32. Then the last feature map the object only has one pixel. In order to solve the problem, some papers like SSD use the method in the third picture. For the proceeding feature map, each has a predict value. But we know that for every feature map, it has the role of learning different semantics. Like the higher map learn the high semantics and the lower map learn the low semantics. It’s imappropriate to use different feature map to predict the result. So FPN(Feature pyramid network) change it. The lower feature map combine the trait of the higher feature map. But the upsample process has a lot of loss. So we need to use lateral connection —— combine the network before. The detil is as below:<br><img src="/images/Picture14.png" alt=""></p>
-<p>ROI Align solve the issue of misalignment. ROI pooling use the method of neareast neighbor interpolation. Suppose one region is 665 <em> 665, then after some steps of maxpooling, with a division of 32, the pixel is floating point which is impossible. Another point, using ROI pooling, if the size is 20 </em> 20, you want to the fix-size of 7 * 7. Then the stride is also floating point. if we just rouding, the loss will be huge.(See the picture) So ROI Align use the bilinear interpolation.(Picture below). It’s more scientific to use two dimension to rounding. </p>
-<p><img src="/images/Picture15.png" alt=""><br><img src="/images/Picture16.png" alt=""></p>
-<p>We don’t introduce mask, because it’s the area of semanic segmentation.</p>
+        <p>训练深度神经网络的时候经常会出现的问题是在每次训练的时候输入的数据发生一丝微小的改变，会改变之后的所有层，并且层数越深影响越大。也可以说当输入的分布发生变化，网络就不得不再去适应新的数据分布。这会导致一个模型非常难训练出来。一旦训练速率与参数初始化不恰当，模型就不会收敛。这个现象被称之为covariate shift。并且，对于每一个网络层输入的变化都会产生covariate shift 的现象，作者把内部的网络节点输入的变化称之为Internal Covariate Shift. 第二个问题是梯度弥散或者梯度爆炸的问题，当网络深度很深的时候，前面参数的细微变化会导致后面参数更新变化非常大。</p>
+<p>解决这个问题通常使用normalizing layer——输入白化（转化为平均值和方差为0，并且去相关花）, 并且可以考虑在每个training step以及某一些间隔插入normalizing layer。但是根据论文的举例，使用normalizing layer也就是白化会导致某些参数的更新的效果被抵消，这样的话更新会一直进行下去，但是输出与损失函数并没有发生变化。之所以更新会抵消是因为梯度下降忽略了normalizing layer 参数对其他参数的依赖。也就是梯度流忽略了normalizing layer。如果求梯度的时候考虑normalizing layer，则计算非常的耗时，需要计算协方差矩阵以及白化部分。并且白化并不是处处可微。</p>
+<p>有两个方法简化计算，一个是讲每个特征当做是独立随机变量单独进行规范化，这样就不存在协方差矩阵。另一个是在每个mini-batch中计算mini-batch和variance来代替整个数据集的mini-batch和variance.因为对于mini-batch gradient decent，计算整个数据集的mini-batch和variance是不切实际的。</p>
+<p>如果仅仅将每一层的输入都进行规范化，那么会改变原先这一层的表达能力，比如本来有两个值，一个在sigmoid函数的线性区域，一个在sigmoid函数的非线性区域，进行规范化后两个值就都作用在了sigmoid函数的线性区域了，原来sigmoid函数的表达能力就没有了。所以加上了一对参数γ和β，来scale和shift规范化的值。</p>
+<p>为什么Batch Normalization会解决数据分布的问题以及梯度弥散的问题? 首先看数据分布的问题，一般数据z之间都是互相关的，拿二维的数据进行举例，假设第一次输入的数据都是主要都是在第一象限。</p>
+<p><img src="1.jpg" alt=""></p>
+<p>在之后经过每一层的操作之后，数据分布都会发生变化，如果网络足够深的话，后面几层的网络接受的输入分布会与之前的数据分布完全不一样。我们希望数据的分布最好是稳定的。所以我应用Batch normalization。使得每次输出的数据都是在四个象限比较均匀的分布。这样数据就会相对的稳定。</p>
+<p>再看解决梯度弥散或者梯度爆炸的问题, 前向传播的时候有：</p>
+<p><img src="Picture20.png" alt=""></p>
+<p>反向传播的时候有：</p>
+<p><img src="Picture21.png" alt=""></p>
+<p>从l层传播到k层则有:</p>
+<p><img src="Picture22.png" alt=""></p>
+<p>如果w大多小于1, 则会产生极小的梯度，如果w大多大于1则会相反。所以使用Batch normalization来解决这个问题。</p>
+<p>首先：</p>
+<p><img src="Picture23.png" alt=""></p>
+<p>反向传导的时候便有：</p>
+<p><img src="2.jpg" alt=""></p>
+<p>第一个式子指的是：对于无论w多大，对梯度流都有影响。第二个式子指的是，w越大，产生的更新越小，有了这两个特点的保证，就可以保证w的更新更加稳定。</p>
+<p>对其本质的思考，训练其实是训练模型的表达能力，区分不同的数据分布，所以，模型会越来越深，表达能力越来越好，但是，模型过深，会产生许多问题，比如数据分布的细微变化，参数细微的变化就会导致后续巨大的变化，导致过拟合，模型的泛化能力很弱，所以，对许多层的数据加入归一化，使得数据分布变化不会那么大，后续模型参数变化也不会过大，但是这样模型的表达能力就变弱了。所以加入γ与β，通过训练γ与β，达到表达能力与泛化能力之间的很好的平衡。</p>
+<p>下面是一些检测自己是否理解了Batch Normalization的问题，有兴趣的读者可以看了回忆一下。</p>
+<p>问题一：Batchnormalization中说的把每个特征单独做规范化中的每个特征在CNN中是指的什么，batchsize中的m在CNN中指的是什么？</p>
+<p>问题二：CNN中做Batchnormalization z = g(BN(Wu))</p>
+<p>问题三：为什么要加γ和β的偏置。</p>
+<p><img src="3.jpg" alt=""></p>
+<p>问题四：白化的偏导为什么计算量比较大并且某些地方不可微。</p>
+<p>问题五：Batchnormalization 放在哪边</p>
+<p>问题六：internal covariate shift</p>
+<p>问题七：test的时候均值与方差从哪来的。</p>
+<p>问题八：如何解决梯度爆炸或梯度消失的。</p>
+<p>问题九：如何解决数据分布的变化。</p>
 
       
 
@@ -264,29 +245,7 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CV</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/technology//" class="article-tag-list-link color1">technology</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -336,7 +295,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/04/08/Detection之RCNN一族/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/04/12/Batchnormalization-论文解读/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -350,18 +309,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/04/12/Batchnormalization-论文解读/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Batchnormalization 论文解读
-        
-      </div>
-    </a>
   
-  
-    <a href="/2018/04/01/yolo演变史/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">yolo演变史</div>
+    <a href="/2018/04/08/Detection之RCNN一族/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Detection之RCNN一族</div>
       <i class="icon-circle-right"></i>
     </a>
   
