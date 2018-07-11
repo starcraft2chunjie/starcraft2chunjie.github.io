@@ -208,7 +208,7 @@
 <p>在使用GPU方面，由于当时GPU的限制，论文中使用了两个GPU，现在自然不再需要。</p>
 <p>normalization方面，采用Local Response Normalization，增强泛化。</p>
 <p>pooling方面，采用overlap pooling，也就是sizeX &gt; stride从而导致相邻池化窗口有重叠。</p>
-<p>减少过拟合方面，采用了两种方法。一种是通过数据增强来人为的增加数据量。一种是dropout。数据增强是将原有的图片提取随机的224 * 224的部分(patches)以及它的水平投影(horizontal reflection), 取四个角落以及中间的部分以及它们的水平投影也就是有10个部分(patches)。还有一种数据增强则是改变训练图片RGB channels的强度。特别的，使用PCA(Principal Component Analysis)来处理ImageNet训练集中一系列的RGB元素值。PCA主要通过将原始数据变换为一组各维度线性无关的表示，可用于提取数据主要特征分量，常用于高维数据的降维。有关PCA的数学原理见[PCA的数学原理]<br>(<a href="http://blog.codinglabs.org/articles/pca-tutorial.html)，" target="_blank" rel="noopener">http://blog.codinglabs.org/articles/pca-tutorial.html)，</a><br>第二种方法是使用Dropout的时候，采用随机dropout。</p>
+<p>减少过拟合方面，采用了两种方法。一种是通过数据增强来人为的增加数据量。一种是dropout。数据增强是将原有的图片提取随机的224 * 224的部分(patches)以及它的水平投影(horizontal reflection), 取四个角落以及中间的部分以及它们的水平投影也就是有10个部分(patches)。还有一种数据增强则是改变训练图片RGB channels的强度。特别的，使用PCA(Principal Component Analysis)来处理ImageNet训练集中一系列的RGB元素值。PCA主要通过将原始数据变换为一组各维度线性无关的表示，可用于提取数据主要特征分量，常用于高维数据的降维。有关PCA的数学原理见<a href="http://blog.codinglabs.org/articles/pca-tutorial.html" target="_blank" rel="noopener">PCA的数学原理</a>，<br>第二种方法是使用Dropout的时候，采用随机dropout。</p>
 <p>训练的细节：</p>
 <ul>
 <li>batchsize 128</li>
@@ -1361,6 +1361,10 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Machine Learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">CV</a>
               </li>
              
@@ -1374,10 +1378,6 @@ MathJax.Hub.Queue(function() {
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color3">日记</a>
-              </li>
-             
-              <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Machine Learning</a>
               </li>
              
               <li class="article-tag-list-item">
