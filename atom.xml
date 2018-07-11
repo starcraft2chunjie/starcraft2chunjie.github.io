@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-04-21T15:40:19.641Z</updated>
+  <updated>2018-07-10T21:32:31.500Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,27 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>imageNet 小结</title>
+    <link href="http://yoursite.com/2018/07/09/imageNet-%E5%B0%8F%E7%BB%93/"/>
+    <id>http://yoursite.com/2018/07/09/imageNet-小结/</id>
+    <published>2018-07-09T09:24:16.000Z</published>
+    <updated>2018-07-10T21:32:31.500Z</updated>
+    
+    <content type="html"><![CDATA[<p>久违的更新～～～，时值暑假，正好把之前没看过的paper仔细的看一遍，也同时为了给自己打下一个更好的基础。我就按照github上的paper的分类精选一个个看下来，paper较多，大约有一百多篇，一个暑假可能看不完，但是我会尽量多看些，并将博客的这个paper系列继续下去。今天讨论的主要是imageNet的演变过程。</p><h2 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h2><p>AlexNet算是deep learning的重大突破，由于它，deep learning开始被广泛使用。</p><p>开始，我们需要知道ImageNet是什么，ImageNet是一个超过1500万已标注的高精度图片，包含有22000个种类(当时的数据)，从2010年开始，举办方举办了一个年度的竞赛叫ILSVRC(ImageNet Large-Scale Visual Recognition Challenge)。其中ILSVRC2010的测试数据集是可以利用的，因此，本paper的大部分试验都在这个数据集上做的。</p><h3 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h3><p>文章首先提出，现实中的问题不像ImageNet上的数据集一样如此特定和单一，因此，对于现实中的问题，需要的模型应该有足够的复杂包容度。而卷积神经网络恰恰有足够的容量（learning capacity）和容量控制能力（随意的控制深度和宽度）。</p><p>由于ImageNet包含不同精度的图片，而我们的神经网络要求固定的输入维度。因此图片采用下采样到256×256。下采样的方法是先rescale将宽变为256，再在中心裁剪出256×256的图像。</p><p>激活函数方面paper使用的是RELU，对比于tanh以及sigmoid这些linear activations. RELU这样的non-linear activations 能够生成non-saturating neurons（处理之后没有被挤压到一个特定区间的值），在训练梯度下降的时间方面，non-linear activation更快。</p><p>在使用GPU方面，由于当时GPU的限制，论文中使用了两个GPU，现在自然不再需要。</p><p>normalization方面，采用Local Response Normalization，增强泛化。</p><p>pooling方面，采用overlap pooling，也就是sizeX &gt; stride从而导致相邻池化窗口有重叠。</p><p>减少过拟合方面，采用了两种方法。一种是通过数据增强来人为的增加数据量。一种是dropout。数据增强是将原有的图片提取随机的224 * 224的部分(patches)以及它的水平投影(horizontal reflection), 取四个角落以及中间的部分以及它们的水平投影也就是有10个部分(patches)。还有一种数据增强则是改变训练图片RGB channels的强度。特别的，使用PCA(Principal Component Analysis)来处理ImageNet训练集中一系列的RGB元素值。PCA主要通过将原始数据变换为一组各维度线性无关的表示，可用于提取数据主要特征分量，常用于高维数据的降维。有关PCA的数学原理见[PCA的数学原理]<br>(<a href="http://blog.codinglabs.org/articles/pca-tutorial.html)，" target="_blank" rel="noopener">http://blog.codinglabs.org/articles/pca-tutorial.html)，</a><br>第二种方法是使用Dropout的时候，采用随机dropout。</p><p>训练的细节：</p><ul><li>batchsize 128</li><li>momentum 0.9</li><li>weight decay 0.0005</li></ul><p>对于权重w的更新规则如下图所示：<br><img src="/images/imageNet2.png" alt=""></p><p>其中v是momentum的变量，i是循环的下标，还有一个不会读的是学习速率。</p><p>初始化权重的时候使用一个以0为平均值的高斯分布，其中标准偏差为0.01，对第二层第四层第五层的卷积层以及全连接层的神经元初始化偏置为1。剩下的偏置为0。</p><p>训练的速率对于所有的层都是一样。调整采用的是启发法，初始的速率设置为0.01，每当validation error不再下降的时候，速率就除以10，直到执行这个操作3次以后为止。</p><p>总的架构下图所示。<br><img src="/images/imageNet1.png" alt=""></p><h2 id="VggNet"><a href="#VggNet" class="headerlink" title="VggNet"></a>VggNet</h2><p>vggNet总结了在AlexNet出现之后近些年的一些成果，是其集大成者，一方面的改进是使用更小的窗口(receptive window)和更小的步长(stride)。另外一个方面的改进是训练和测试网络分开,训练采用整张图片以及多尺度的图片。而本片论文提高方向则是增加深度，由于使用的比较小的窗口(3 × 3)，参数量较小，因此增加深度是可行的。</p><h3 id="architecture"><a href="#architecture" class="headerlink" title="architecture"></a>architecture</h3><p>输入: 224 × 224<br>预处理 : subtract the mean of the RGB value (training set, each pixel)</p><p>总体架构如下图所示：<br><img src="/images/imageNet3.png" alt=""></p><h4 id="滤波器"><a href="#滤波器" class="headerlink" title="滤波器"></a>滤波器</h4><p>使用三个3 × 3的小窗口来代替1一个7 × 7的窗口的原因：</p><ul><li>有三个non-linear rectifiction layer而不是一个可以让决策函数更具有辨别能力(make the decision function more discriminative)</li><li>参数量：假设有C个channel，则前一个的参数量为3 × （3 × 3 × C），后一个的参数量则为7 × 7 × C。</li></ul><p>1 × 1 卷积层的加入</p><ul><li><p>增加decision function的非线性性，同时也能够避免影响卷积层的感受野。尽管卷积层本身是线性映射，但是由于还增加了RELU层，所以引进了非线性性。</p></li><li><p>专注于跨通道的特征组合，不考虑局部信息组合。</p></li><li><p>对feature map的channel级别降维或者升维。</p><h4 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h4><p>一般常见的网络的结构大多为INPUT -&gt; [[CONV -&gt; RELU]×N -&gt; POOL?]×M -&gt; [FC -&gt; RELU]×K -&gt; FC，vgg net的池化层不同于Alex Net采用的3 × 3 stride为2的maxpooling，而是采用的2 × 2 stride为2的maxpooling。池化层做的事情是根据对应的max或average的方式进行特征筛选。小的kernel带来的是更细节的信息捕获。</p></li></ul><h4 id="特征图"><a href="#特征图" class="headerlink" title="特征图"></a>特征图</h4><p>网络在随层数递增的过程中，通过池化也逐渐忽略局部信息，池化操作使得宽高每一次都变为变为一半，而深度每次增加一倍。信息分散到channel层级上。特征图从channel从512开始进入全连接层，全连接层与卷积层相比更考虑全局信息，三个全连接是为了捕捉特征映射来去之间的细微变化。</p><h4 id="layer-pattern"><a href="#layer-pattern" class="headerlink" title="layer pattern"></a>layer pattern</h4><p>vgg net 有两种layer pattern，第二种（[conv-relu]-[conv-relu]-[conv-relu]-pool）比第一种（[conv-relu]-[conv-relu]-pool） 多了一个[conv-relu]，我的理解是</p><ul><li>开始时feature map的local特征信息更加多一些，之后通过增加conv filter的方式扩大channel的数目，在一个layer pattern的中层，channel数已经足够，当再想提取lacal的信息的时候，就加一层[conv - relu]的形式来压榨提炼特征。类似于使用非线性变换对已有特征进行变换，从而产生更多的特征。</li><li>多出的conv对网络中层进一步进行学习和控制保证特征信息不漂移到channel级别上。</li><li>conv本身更加注重单张feature map的局部信息，尽量去平衡channel(depth)级别与local级别(width, height)，控制特征信息不要过于向channel级别偏移。</li></ul><p>关于layer pattern</p><ul><li>串联和串联中带有并联的网络架构。GoogleNet引入inception模块，ResNet引入Residual Block。串联带有一些并联同类操作但不同参数的模块在特征提取上更好(做特征工程)</li><li>用在ImageNet上预训练的模型。</li></ul><h3 id="training-detail"><a href="#training-detail" class="headerlink" title="training detail"></a>training detail</h3><p>在训练的细节方面，几乎与AlexNet相同，额外的bathsize选择的是256。在初始化的方面，需要非常小心，首先对于上图中的configuration A,采用随机初始化进行训练，然后对于更深的模型，将前四个卷积层以及最后三层的全连接层使用A的参数，中间的层采用随机初始化。</p><p>全连接层的随机初始化：</p><ul><li>FC4096-ReLU6-Drop0.5，FC为高斯分布初始化（std=0.005），bias常数初始化（0.1）</li><li>FC4096-ReLU7-Drop0.5，FC为高斯分布初始化（std=0.005），bias常数初始化（0.1）</li><li>FC1000（最后接SoftMax1000分类），FC为高斯分布初始化（std=0.005），bias常数初始化（0.1）<br>实际并非采用的Alex net的std = 0.1， bias = 0。</li></ul><h3 id="test-detail"><a href="#test-detail" class="headerlink" title="test detail"></a>test detail</h3><p>参考overfeat，测试的时候将最后的全连接层该为卷积层，从而可以处理任意分辨率的图片，无需对原图进行resize。但是若原图大于resize之后的图片，那么将最后的s × s的feature map进行average，最终交给softmax的还是1 × 1的feature map。<br>在介绍下面的模块之前首先我们需要先了解一下FCN(全卷积网络)</p><p>测试的细节方面</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;久违的更新～～～，时值暑假，正好把之前没看过的paper仔细的看一遍，也同时为了给自己打下一个更好的基础。我就按照github上的paper的分类精选一个个看下来，paper较多，大约有一百多篇，一个暑假可能看不完，但是我会尽量多看些，并将博客的这个paper系列继续下去。
+      
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>近日学习计划——4.21</title>

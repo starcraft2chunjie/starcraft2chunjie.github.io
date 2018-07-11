@@ -6,20 +6,23 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Faster RCNN 详解与实现 | artanis home</title>
+  <title>imageNet 小结 | artanis home</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="最近一直在研究CV领域的一些算法，由于本人编程水平较弱加之faster rcnn算法比较复杂，虽然原理在很早就大致看懂，但在看源码的时候仍然吃了不少苦头，近些时候，终于了解了代码的大致含义并借鉴大神们的代码自己用pytorch实现了一下。在此，想跟大家详细地解释一下代码的含义， 帮助读者更好的理解这一算法。本人代码如下： Faster-RCNN-pytorch 需要先了解一下faster rcnn">
-<meta name="keywords" content="CV">
+  <meta name="description" content="久违的更新～～～，时值暑假，正好把之前没看过的paper仔细的看一遍，也同时为了给自己打下一个更好的基础。我就按照github上的paper的分类精选一个个看下来，paper较多，大约有一百多篇，一个暑假可能看不完，但是我会尽量多看些，并将博客的这个paper系列继续下去。今天讨论的主要是imageNet的演变过程。 AlexNetAlexNet算是deep learning的重大突破，由于它，d">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Faster RCNN 详解与实现">
-<meta property="og:url" content="http://yoursite.com/2018/02/26/Faster-RCNN-详解与实现/index.html">
+<meta property="og:title" content="imageNet 小结">
+<meta property="og:url" content="http://yoursite.com/2018/07/09/imageNet-小结/index.html">
 <meta property="og:site_name" content="artanis home">
-<meta property="og:description" content="最近一直在研究CV领域的一些算法，由于本人编程水平较弱加之faster rcnn算法比较复杂，虽然原理在很早就大致看懂，但在看源码的时候仍然吃了不少苦头，近些时候，终于了解了代码的大致含义并借鉴大神们的代码自己用pytorch实现了一下。在此，想跟大家详细地解释一下代码的含义， 帮助读者更好的理解这一算法。本人代码如下： Faster-RCNN-pytorch 需要先了解一下faster rcnn">
+<meta property="og:description" content="久违的更新～～～，时值暑假，正好把之前没看过的paper仔细的看一遍，也同时为了给自己打下一个更好的基础。我就按照github上的paper的分类精选一个个看下来，paper较多，大约有一百多篇，一个暑假可能看不完，但是我会尽量多看些，并将博客的这个paper系列继续下去。今天讨论的主要是imageNet的演变过程。 AlexNetAlexNet算是deep learning的重大突破，由于它，d">
 <meta property="og:locale" content="Chinese">
-<meta property="og:updated_time" content="2018-03-05T23:09:48.029Z">
+<meta property="og:image" content="http://yoursite.com/images/imageNet2.png">
+<meta property="og:image" content="http://yoursite.com/images/imageNet1.png">
+<meta property="og:image" content="http://yoursite.com/images/imageNet3.png">
+<meta property="og:updated_time" content="2018-07-10T21:32:31.500Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Faster RCNN 详解与实现">
-<meta name="twitter:description" content="最近一直在研究CV领域的一些算法，由于本人编程水平较弱加之faster rcnn算法比较复杂，虽然原理在很早就大致看懂，但在看源码的时候仍然吃了不少苦头，近些时候，终于了解了代码的大致含义并借鉴大神们的代码自己用pytorch实现了一下。在此，想跟大家详细地解释一下代码的含义， 帮助读者更好的理解这一算法。本人代码如下： Faster-RCNN-pytorch 需要先了解一下faster rcnn">
+<meta name="twitter:title" content="imageNet 小结">
+<meta name="twitter:description" content="久违的更新～～～，时值暑假，正好把之前没看过的paper仔细的看一遍，也同时为了给自己打下一个更好的基础。我就按照github上的paper的分类精选一个个看下来，paper较多，大约有一百多篇，一个暑假可能看不完，但是我会尽量多看些，并将博客的这个paper系列继续下去。今天讨论的主要是imageNet的演变过程。 AlexNetAlexNet算是deep learning的重大突破，由于它，d">
+<meta name="twitter:image" content="http://yoursite.com/images/imageNet2.png">
   
     <link rel="alternative" href="/atom.xml" title="artanis home" type="application/atom+xml">
   
@@ -179,90 +182,86 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-Faster-RCNN-详解与实现" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-imageNet-小结" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Faster RCNN 详解与实现
+      imageNet 小结
     </h1>
   
 
         
-        <a href="/2018/02/26/Faster-RCNN-详解与实现/" class="archive-article-date">
-  	<time datetime="2018-02-25T16:54:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-02-26</time>
+        <a href="/2018/07/09/imageNet-小结/" class="archive-article-date">
+  	<time datetime="2018-07-09T09:24:16.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-07-09</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>最近一直在研究CV领域的一些算法，由于本人编程水平较弱加之faster rcnn算法比较复杂，虽然原理在很早就大致看懂，但在看源码的时候仍然吃了不少苦头，近些时候，终于了解了代码的大致含义并借鉴大神们的代码自己用pytorch实现了一下。在此，想跟大家详细地解释一下代码的含义， 帮助读者更好的理解这一算法。本人代码如下：</p>
-<p><a href="https://github.com/starcraft2chunjie/Faster-RCNN-pytorch/tree/master" target="_blank" rel="noopener">Faster-RCNN-pytorch</a></p>
-<p>需要先了解一下faster rcnn的读者可以点击以下链接，这是本人看到的比较全面细致的faster rcnn教程。</p>
-<p><a href="https://www.jianshu.com/p/de37451a0a77?utm_campaign=maleskine&amp;utm_content=note&amp;utm_medium=seo_notes&amp;utm_source=recommendation" target="_blank" rel="noopener">Faster RCNN 详解</a></p>
-<h2 id="model"><a href="#model" class="headerlink" title="model"></a>model</h2><p>这一部分对应model_easy.py，我们知道, Faster RCNN 总共实际上就是四个模型，CNN模型， RPN(Region proposal layer), ROI Pooling layer, Classification layer(可以称为Faster RCNN层)。CNN层使用预训练的vgg16提取特征，得到feature map，然后进入RPN层, RPN层s首先经过一个kernel_size为3的层,之后再分为两部分，分别输出2<em>9大小和4</em>9大小的向量（对应于9 anchor <em> 2 classifier以及 9 anchor </em> 4 coordinate）,通过训练修正proposal的位置以及数量（通过rpn文件里面的proposal_layer.py），修正好的proposal进入ROI Pooling层统一划成7*7大小，最后进入FasterRCNN层输出最后的bbox_pred(bbox_delta)以及scores。</p>
-<p>CNN层比较简单，在这里不再赘述。我们看一看RPN层的源码。</p>
-<h3 id="RPN"><a href="#RPN" class="headerlink" title="RPN"></a>RPN</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"># the simple model of RPN</span><br><span class="line">class RPN(nn.Module):</span><br><span class="line"></span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(RPN, self).__init__()</span><br><span class="line"></span><br><span class="line">        self.conv = nn.Sequential(nn.Conv2d(512, 512, kernel_size=3, stride=1, padding=(1, 1)),</span><br><span class="line">                                            nn.ReLU())</span><br><span class="line"></span><br><span class="line">        # 9 anchor * 2 classfier (object or non-object) each grid</span><br><span class="line">        self.conv1 = nn.Conv2d(512, 2 * 9, kernel_size=1, stride=1)</span><br><span class="line"></span><br><span class="line">        # 9 anchor * 4 coordinate regressor each grids</span><br><span class="line">        self.conv2 = nn.Conv2d(512, 4 * 9, kernel_size=1, stride=1)</span><br><span class="line">        self.softmax = nn.Softmax()</span><br><span class="line"></span><br><span class="line">    def forward(self, features):</span><br><span class="line"></span><br><span class="line">        features = self.conv(features)</span><br><span class="line"></span><br><span class="line">        logits, rpn_bbox_pred = self.conv1(features), self.conv2(features)</span><br><span class="line"></span><br><span class="line">        height, width = features.size()[-2:]</span><br><span class="line">        logits = logits.squeeze(0).permute(1, 2, 0).contiguous()  # (1, 18, H/16, W/16) =&gt; (H/16 ,W/16, 18)</span><br><span class="line">        logits = logits.view(-1, 2)  # (H/16 ,W/16, 18) =&gt; (H/16 * W/16 * 9, 2)</span><br><span class="line"></span><br><span class="line">        rpn_cls_prob = self.softmax(logits)</span><br><span class="line">        rpn_cls_prob = rpn_cls_prob.view(height, width, 18)  # (H/16 * W/16 * 9, 2)  =&gt; (H/16 ,W/16, 18)</span><br><span class="line">        rpn_cls_prob = rpn_cls_prob.permute(2, 0, 1).contiguous().unsqueeze(0) # (H/16 ,W/16, 18) =&gt; (1, 18, H/16, W/16)</span><br><span class="line"></span><br><span class="line">        return rpn_bbox_pred, rpn_cls_prob, logits</span><br></pre></td></tr></table></figure>
-<p>注意forward的返回值，一个是rpn_bbox_pred，这个是我们我提到的教程里面的预测的[dx, dy, dh, dw]，也是之后的bbox_delta。rpn_cls_prob也仅仅只是logits经过了一层softmax函数而已。模型大致架构比较简单，下面来看看与RPN层相关的函数。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">def proposal(self, rpn_bbox_pred, rpn_cls_prob, im_info, test, args):</span><br><span class="line">       &quot;&quot;&quot;</span><br><span class="line">       Arguments:</span><br><span class="line">           rpn_bbox_pred (Tensor) : (1, 4*9, H/16, W/16)</span><br><span class="line">           rpn_cls_prob (Tensor) : (1, 2*9, H/16, W/16)</span><br><span class="line">           im_info (Tuple) : (Height, Width, Channel, scale_ratios)</span><br><span class="line">           test (Bool) : True or False</span><br><span class="line">           args (argparse.Namespace) : global arguments</span><br><span class="line">       Return:</span><br><span class="line">           # in each minibatch number of proposal boxes is variable</span><br><span class="line">           proposals_boxes (Ndarray) : ( # proposal boxes, 4)</span><br><span class="line">           scores (Ndarray) :  ( # proposal boxes, )</span><br><span class="line">       &quot;&quot;&quot;</span><br><span class="line">       &quot;&quot;&quot;</span><br><span class="line">       # Algorithm:</span><br><span class="line">       #</span><br><span class="line">       # for each (H, W) location i</span><br><span class="line">       #   generate A anchor boxes centered on cell i</span><br><span class="line">       #   apply predicted bbox deltas at cell i to each of the A anchors</span><br><span class="line">       # clip predicted boxes to image</span><br><span class="line">       # remove predicted boxes with either height or width &lt; threshold</span><br><span class="line">       # sort all (proposal, score) pairs by score from highest to lowest</span><br><span class="line">       # take top pre_nms_topN proposals before NMS</span><br><span class="line">       # apply NMS with threshold 0.7 to remaining proposals</span><br><span class="line">       # take after_nms_topN proposals after NMS</span><br><span class="line">       # return the top proposals (-&gt; RoIs top, scores top)</span><br><span class="line">       #layer_params = yaml.load(self.param_str_)</span><br><span class="line">       &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       anchors = generate_anchors()</span><br><span class="line">       _num_anchors = anchors.shape[0]</span><br><span class="line"></span><br><span class="line">       all_anchors = get_anchor(rpn_cls_prob, anchors)   # [H * W * 9, 4]</span><br><span class="line"></span><br><span class="line">       pre_nms_topn = args.pre_nms_topn if test == False else args.test_pre_nms_topn</span><br><span class="line">       nms_thresh = args.nms_thresh if test == False else args.test_nms_thresh</span><br><span class="line">       post_nms_topn = args.post_nms_topn if test == False else args.test_post_nms_topn</span><br><span class="line"></span><br><span class="line">       &quot;&quot;&quot;It&apos;s directly from anchor_target_layer, essentially from training the RPN&quot;&quot;&quot;</span><br><span class="line">       bbox_deltas = self._get_bbox_deltas(rpn_bbox_pred).data.cpu().numpy()</span><br><span class="line"></span><br><span class="line">       # 1. Convert anchors into proposal via bbox transformation</span><br><span class="line">       &quot;&quot;&quot;Here we need to generate the precise proposal location for the later operation&quot;&quot;&quot;</span><br><span class="line">       proposals_boxes = bbox_transform_inv(all_anchors, bbox_deltas)  # (H/16 * W/16 * 9, 4) all proposal boxes</span><br><span class="line">       scores = self._get_pos_score(rpn_cls_prob).data.cpu().numpy()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">       # 2. clip predicted boxes to image</span><br><span class="line">       proposals = clip_boxes(proposals_boxes, im_info[:2])</span><br><span class="line"></span><br><span class="line">        # 3. remove predicted boxes with either height or width &lt; threshold</span><br><span class="line">       # (NOTE: convert min_size to input image scale stored in im_info[3])</span><br><span class="line">       keep = filter_boxes(proposals_boxes, self.args.min_size * max(im_info[3]))</span><br><span class="line">       proposals = proposals[keep, :]</span><br><span class="line">       scores = scores[keep]</span><br><span class="line"></span><br><span class="line">       # 4. sort all (proposal, score) pairs by score from highest to lowest</span><br><span class="line">       # 5. take top pre_nms_topn (e.g. 6000)</span><br><span class="line">       order = scores.ravel().argsort()[::-1]</span><br><span class="line">       if pre_nms_topn &gt; 0:</span><br><span class="line">           order = order[:pre_nms_topn]</span><br><span class="line">       proposals = proposals[order, :]</span><br><span class="line">       scores = scores[order]</span><br><span class="line"></span><br><span class="line">       # 6. apply nms (e.g. threshold = 0.7)</span><br><span class="line"></span><br><span class="line">       keep = py_cpu_nms(np.hstack((proposals, scores)), nms_thresh)</span><br><span class="line"></span><br><span class="line">       # 7. take after_nms_topN (e.g. 300)</span><br><span class="line">       if post_nms_topn &gt; 0:</span><br><span class="line">           keep = keep[:post_nms_topn]</span><br><span class="line">       </span><br><span class="line">       # 8. return the top proposals (-&gt; RoIs top)</span><br><span class="line">       proposals = proposals[keep, :]</span><br><span class="line">       scores = scores[keep]</span><br><span class="line">       batch_inds = np.zeros((proposals.shape[0], 1), dtype=np.float32)</span><br><span class="line">       blob = np.hstack((batch_inds, proposals.astype(np.float32, copy = False)))</span><br><span class="line">       return blob</span><br></pre></td></tr></table></figure>
-<p>这段代码的作用是什么？用教程里面的话就是：</p>
-<blockquote>
-<ol>
-<li>生成anchors，利用[dx(A)，dy(A)，dw(A)，dh(A)]对所有的anchors做bbox regression回归（这里的anchors生成和训练时完全一致）</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol>
-<li>按照输入的foreground softmax scores由大到小排序anchors，提取前pre_nms_topN(e.g. 6000)个anchors，即提取修正位置后的foreground anchors。</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol>
-<li>利用im_info将fg anchors从MxN尺度映射回PxQ原图，判断fg anchors是否大范围超过边界，剔除严重超出边界fg anchors。</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol>
-<li>进行nms（nonmaximum suppression，非极大值抑制）</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol>
-<li>再次按照nms后的foreground softmax scores由大到小排序fg anchors，提取前post_nms_topN(e.g. 300)结果作为proposal输出。</li>
-</ol>
-</blockquote>
-<blockquote>
-<ol>
-<li>之后输出proposal=[x1, y1, x2, y2]，注意，由于在第三步中将anchors映射回原图判断是否超出边界，所以这里输出的proposal是对应MxN输入图像尺度的</li>
-</ol>
-</blockquote>
-<p>简单来说，就是对产生的所有anchor进行修正以及筛选。此函数输入的主要参数是之前RPN网络输出的rpn_bbox_pred以及rpn_cls_prob。这里有几行代码需要解释一下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bbox_deltas = self._get_bbox_deltas(rpn_bbox_pred).data.cpu().numpy()</span><br><span class="line"></span><br><span class="line">proposals_boxes = bbox_transform_inv(all_anchors, bbox_deltas)  # (H/16 * W/16 * 9, 4) all proposal boxes</span><br><span class="line"></span><br><span class="line">scores = self._get_pos_score(rpn_cls_prob).data.cpu().numpy()</span><br></pre></td></tr></table></figure>
-<p>_get_bbox_deltas仅仅是把rpn_bbox_pred转换为了（H/16 <em> W/16 </em> 9, 4）, bbox_transform_inv则是根据bbox_deltas以及anchors生成了对应的pred_anchor(注意之前的rpn_bbox_pred仅仅是生成的[dx, dy, dh, dw]，不是最终确定的proposal)，_get_pos_score也仅仅是将rpn_cls_score转化为(H/16 <em> W/16 </em> 9, 1)</p>
-<h3 id="ROI-Pooling"><a href="#ROI-Pooling" class="headerlink" title="ROI Pooling"></a>ROI Pooling</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">class ROIpooling(nn.Module):</span><br><span class="line"></span><br><span class="line">    def __init__(self, size=(7, 7), spatial_scale=1.0 / 16.0):</span><br><span class="line">        super(ROIpooling, self).__init__()</span><br><span class="line">        self.adapmax2d = nn.AdaptiveMaxPool2d(size)</span><br><span class="line">        self.spatial_scale = spatial_scale</span><br><span class="line"></span><br><span class="line">    def forward(self, features, rois_boxes):</span><br><span class="line"></span><br><span class="line">        # rois_boxes : [x, y, x`, y`]</span><br><span class="line"></span><br><span class="line">        if type(rois_boxes) == np.ndarray:</span><br><span class="line">            rois_boxes = to_var(torch.from_numpy(rois_boxes))</span><br><span class="line"></span><br><span class="line">        rois_boxes = rois_boxes.data.float().clone()</span><br><span class="line">        rois_boxes.mul_(self.spatial_scale)</span><br><span class="line">        rois_boxes = rois_boxes.long()</span><br><span class="line"></span><br><span class="line">        output = []</span><br><span class="line"></span><br><span class="line">        for i in range(rois_boxes.size(0)):</span><br><span class="line">            roi = rois_boxes[i]</span><br><span class="line"></span><br><span class="line">            try:</span><br><span class="line"></span><br><span class="line">                roi_feature = features[:, :, roi[1]:(roi[3] + 1), roi[0]:(roi[2] + 1)]</span><br><span class="line">            except Exception as e:</span><br><span class="line">                print(e, roi)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            pool_feature = self.adapmax2d(roi_feature)</span><br><span class="line">            output.append(pool_feature)</span><br><span class="line"></span><br><span class="line">        return torch.cat(output, 0)</span><br></pre></td></tr></table></figure>
-<p>ROI Pooling显得比较简单，但这并不是因为其算法本身简单，实际上，此层需要实现的算法是对任意输入的proposal，都要加工成7*7大小，这个工作量似乎不小，实际上，之前大神的代码里，ROI Pooling的实现代码很长，但正因为如此，pytorch的contributor将其封装，现在仅仅只需要调用adapmax2d就可以了。</p>
-<h3 id="FasterRCNN"><a href="#FasterRCNN" class="headerlink" title="FasterRCNN"></a>FasterRCNN</h3><p>这个代码比较简单，没什么好讲的。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">class FasterRcnn(nn.Module):</span><br><span class="line"></span><br><span class="line">    def __init__(self):</span><br><span class="line">        super(FasterRcnn, self).__init__()</span><br><span class="line">        self.fc1 = nn.Sequential(nn.Linear(512 * 7 * 7, 4096),</span><br><span class="line">                                 nn.ReLU(),</span><br><span class="line">                                 nn.Dropout())</span><br><span class="line"></span><br><span class="line">        self.fc2 = nn.Sequential(nn.Linear(4096, 4096),</span><br><span class="line">                                 nn.ReLU(),</span><br><span class="line">                                 nn.Dropout())</span><br><span class="line"></span><br><span class="line">        # 20 class + 1 backround classfier each roi</span><br><span class="line">        self.classfier = nn.Linear(4096, 21)</span><br><span class="line">        self.softmax = nn.Softmax()</span><br><span class="line"></span><br><span class="line">        # 21 class * 4 coordinate regressor each roi</span><br><span class="line">        self.regressor = nn.Linear(4096, 21 * 4)</span><br><span class="line"></span><br><span class="line">    def forward(self, features):</span><br><span class="line"></span><br><span class="line">        features = features.view(-1, 512 * 7 * 7)</span><br><span class="line">        features = self.fc1(features)</span><br><span class="line">        features = self.fc2(features)</span><br><span class="line"></span><br><span class="line">        try:</span><br><span class="line">            logits = self.classfier(features)</span><br><span class="line">            scores = self.softmax(logits)</span><br><span class="line">            bbox_delta = self.regressor(features)</span><br><span class="line"></span><br><span class="line">        except Exception as e:</span><br><span class="line">            print(e, logits)</span><br><span class="line"></span><br><span class="line">        return bbox_delta, scores, logits</span><br></pre></td></tr></table></figure>
-<h2 id="Loss"><a href="#Loss" class="headerlink" title="Loss"></a>Loss</h2><p>loss部分主要分为两个部分，rpn_loss以及fasterRCNN_loss</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">def rpn_loss(rpn_cls_prob, rpn_logits, rpn_bbox_pred, rpn_labels, rpn_bbox_targets, rpn_bbox_inside_weights):</span><br><span class="line">    </span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    Arguments:</span><br><span class="line">        rpn_cls_prob (Tensor): (1, 2*9, H/16, W/16)</span><br><span class="line">        rpn_logits (Tensor): (H/16 * W/16 * 9 , 2) object or non-object rpn_logits</span><br><span class="line">        rpn_bbox_pred (Tensor): (1, 4*9, H/16, W/16) predicted boxes</span><br><span class="line">        rpn_labels (Ndarray) : (H/16 * W/16 * 9 ,)</span><br><span class="line">        rpn_bbox_targets (Ndarray) : (H/16 * W/16 * 9, 4)</span><br><span class="line">        rpn_bbox_inside_weights (Ndarray) : (H/16 * W/16 * 9, 4) masking for only positive box loss</span><br><span class="line">    Return:</span><br><span class="line">        cls_loss (Scalar) : classfication loss</span><br><span class="line">        reg_loss * 10 (Scalar) : regression loss</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line"></span><br><span class="line">    height, width = rpn_cls_prob.size()[-2:]  # (H/16, W/16)</span><br><span class="line">    rpn_cls_prob = rpn_cls_prob.squeeze(0).permute(1, 2, 0).contiguous()  # (1, 18, H/16, W/16) =&gt; (H/16 ,W/16, 18)</span><br><span class="line">    rpn_cls_prob = rpn_cls_prob.view(-1, 2)  # (H/16 ,W/16, 18) =&gt; (H/16 * W/16 * 9, 2)</span><br><span class="line"></span><br><span class="line">    rpn_labels = to_tensor(rpn_labels).long() # convert properly # (H/16 * W/16 * 9)</span><br><span class="line"></span><br><span class="line">    #index where not -1</span><br><span class="line">    idx = rpn_labels.ge(0).nonzero()[:, 0]</span><br><span class="line">    rpn_cls_prob = rpn_cls_prob.index_select(0, to_var(idx))</span><br><span class="line">    rpn_labels = rpn_labels.index_select(0, idx)</span><br><span class="line">    rpn_logits = rpn_logits.squeeze().index_select(0, to_var(idx))</span><br><span class="line"></span><br><span class="line">    positive_cnt = torch.sum(rpn_labels.eq(1))</span><br><span class="line">    negative_cnt = torch.sum(rpn_labels.eq(0))</span><br><span class="line"></span><br><span class="line">    rpn_labels = to_var(rpn_labels)</span><br><span class="line"></span><br><span class="line">    cls_crit = nn.CrossEntropyLoss()</span><br><span class="line">    cls_loss = cls_crit(rpn_logits, rpn_labels)</span><br><span class="line"></span><br><span class="line">    rpn_bbox_targets = torch.from_numpy(rpn_bbox_targets)</span><br><span class="line">    rpn_bbox_targets = rpn_bbox_targets.view(height, width, 36)  # (H/16 * W/16 * 9, 4)  =&gt; (H/16 ,W/16, 36)</span><br><span class="line">    rpn_bbox_targets = rpn_bbox_targets.permute(2, 0, 1).contiguous().unsqueeze(0) # (H/16 ,W/16, 36) =&gt; (1, 36, H/16, W/16)</span><br><span class="line">    rpn_bbox_targets = to_var(rpn_bbox_targets)</span><br><span class="line"></span><br><span class="line">    rpn_bbox_inside_weights = torch.from_numpy(rpn_bbox_inside_weights)</span><br><span class="line">    rpn_bbox_inside_weights = rpn_bbox_inside_weights.view(height, width, 36)  # (H/16 * W/16 * 9, 4)  =&gt; (H/16 ,W/16, 36)</span><br><span class="line">    rpn_bbox_inside_weights = rpn_bbox_inside_weights.permute(2, 0, 1).contiguous().unsqueeze(0) # (H/16 ,W/16, 36) =&gt; (1, 36, H/16, W/16)</span><br><span class="line"></span><br><span class="line">    rpn_bbox_inside_weights = rpn_bbox_inside_weights.cuda() if torch.cuda.is_available()</span><br><span class="line"></span><br><span class="line">    rpn_bbox_pred = to_var(torch.mul(rpn_bbox_pred.data, rpn_bbox_inside_weights))</span><br><span class="line">    rpn_bbox_targets = to_var(torch.mul(rpn_bbox_targets.data, rpn_bbox_inside_weights))</span><br><span class="line"></span><br><span class="line">    reg_loss = F.smooth_l1_loss(rpn_bbox_pred, rpn_bbox_targets, size_average = False) / (positive_cnt + 1e-4)</span><br><span class="line"></span><br><span class="line">    return cls_loss, reg_loss * 10</span><br></pre></td></tr></table></figure>
-<p>首先注意一点，rpn_bbox_targets, rpn_bbox_inside_weights这两个参数是从anchor_target此函数得来的。</p>
-<p>rpn_loss的主要操作流程如下：</p>
+        <p>久违的更新～～～，时值暑假，正好把之前没看过的paper仔细的看一遍，也同时为了给自己打下一个更好的基础。我就按照github上的paper的分类精选一个个看下来，paper较多，大约有一百多篇，一个暑假可能看不完，但是我会尽量多看些，并将博客的这个paper系列继续下去。今天讨论的主要是imageNet的演变过程。</p>
+<h2 id="AlexNet"><a href="#AlexNet" class="headerlink" title="AlexNet"></a>AlexNet</h2><p>AlexNet算是deep learning的重大突破，由于它，deep learning开始被广泛使用。</p>
+<p>开始，我们需要知道ImageNet是什么，ImageNet是一个超过1500万已标注的高精度图片，包含有22000个种类(当时的数据)，从2010年开始，举办方举办了一个年度的竞赛叫ILSVRC(ImageNet Large-Scale Visual Recognition Challenge)。其中ILSVRC2010的测试数据集是可以利用的，因此，本paper的大部分试验都在这个数据集上做的。</p>
+<h3 id="思想"><a href="#思想" class="headerlink" title="思想"></a>思想</h3><p>文章首先提出，现实中的问题不像ImageNet上的数据集一样如此特定和单一，因此，对于现实中的问题，需要的模型应该有足够的复杂包容度。而卷积神经网络恰恰有足够的容量（learning capacity）和容量控制能力（随意的控制深度和宽度）。</p>
+<p>由于ImageNet包含不同精度的图片，而我们的神经网络要求固定的输入维度。因此图片采用下采样到256×256。下采样的方法是先rescale将宽变为256，再在中心裁剪出256×256的图像。</p>
+<p>激活函数方面paper使用的是RELU，对比于tanh以及sigmoid这些linear activations. RELU这样的non-linear activations 能够生成non-saturating neurons（处理之后没有被挤压到一个特定区间的值），在训练梯度下降的时间方面，non-linear activation更快。</p>
+<p>在使用GPU方面，由于当时GPU的限制，论文中使用了两个GPU，现在自然不再需要。</p>
+<p>normalization方面，采用Local Response Normalization，增强泛化。</p>
+<p>pooling方面，采用overlap pooling，也就是sizeX &gt; stride从而导致相邻池化窗口有重叠。</p>
+<p>减少过拟合方面，采用了两种方法。一种是通过数据增强来人为的增加数据量。一种是dropout。数据增强是将原有的图片提取随机的224 * 224的部分(patches)以及它的水平投影(horizontal reflection), 取四个角落以及中间的部分以及它们的水平投影也就是有10个部分(patches)。还有一种数据增强则是改变训练图片RGB channels的强度。特别的，使用PCA(Principal Component Analysis)来处理ImageNet训练集中一系列的RGB元素值。PCA主要通过将原始数据变换为一组各维度线性无关的表示，可用于提取数据主要特征分量，常用于高维数据的降维。有关PCA的数学原理见[PCA的数学原理]<br>(<a href="http://blog.codinglabs.org/articles/pca-tutorial.html)，" target="_blank" rel="noopener">http://blog.codinglabs.org/articles/pca-tutorial.html)，</a><br>第二种方法是使用Dropout的时候，采用随机dropout。</p>
+<p>训练的细节：</p>
 <ul>
-<li><p>筛选出label值不是-1的proposal(-1表示don’t care area)</p>
+<li>batchsize 128</li>
+<li>momentum 0.9</li>
+<li>weight decay 0.0005</li>
+</ul>
+<p>对于权重w的更新规则如下图所示：<br><img src="/images/imageNet2.png" alt=""></p>
+<p>其中v是momentum的变量，i是循环的下标，还有一个不会读的是学习速率。</p>
+<p>初始化权重的时候使用一个以0为平均值的高斯分布，其中标准偏差为0.01，对第二层第四层第五层的卷积层以及全连接层的神经元初始化偏置为1。剩下的偏置为0。</p>
+<p>训练的速率对于所有的层都是一样。调整采用的是启发法，初始的速率设置为0.01，每当validation error不再下降的时候，速率就除以10，直到执行这个操作3次以后为止。</p>
+<p>总的架构下图所示。<br><img src="/images/imageNet1.png" alt=""></p>
+<h2 id="VggNet"><a href="#VggNet" class="headerlink" title="VggNet"></a>VggNet</h2><p>vggNet总结了在AlexNet出现之后近些年的一些成果，是其集大成者，一方面的改进是使用更小的窗口(receptive window)和更小的步长(stride)。另外一个方面的改进是训练和测试网络分开,训练采用整张图片以及多尺度的图片。而本片论文提高方向则是增加深度，由于使用的比较小的窗口(3 × 3)，参数量较小，因此增加深度是可行的。</p>
+<h3 id="architecture"><a href="#architecture" class="headerlink" title="architecture"></a>architecture</h3><p>输入: 224 × 224<br>预处理 : subtract the mean of the RGB value (training set, each pixel)</p>
+<p>总体架构如下图所示：<br><img src="/images/imageNet3.png" alt=""></p>
+<h4 id="滤波器"><a href="#滤波器" class="headerlink" title="滤波器"></a>滤波器</h4><p>使用三个3 × 3的小窗口来代替1一个7 × 7的窗口的原因：</p>
+<ul>
+<li>有三个non-linear rectifiction layer而不是一个可以让决策函数更具有辨别能力(make the decision function more discriminative)</li>
+<li>参数量：假设有C个channel，则前一个的参数量为3 × （3 × 3 × C），后一个的参数量则为7 × 7 × C。</li>
+</ul>
+<p>1 × 1 卷积层的加入</p>
+<ul>
+<li><p>增加decision function的非线性性，同时也能够避免影响卷积层的感受野。尽管卷积层本身是线性映射，但是由于还增加了RELU层，所以引进了非线性性。</p>
 </li>
-<li><p>计算出是前景的proposal和是背景的proposal的数目。</p>
+<li><p>专注于跨通道的特征组合，不考虑局部信息组合。</p>
 </li>
-<li><p>classification使用CrossEntropyLoss(注意CrossEntropyLoss已经包含了log softmaxLoss,所以只需要使用logits作为参数)</p>
-</li>
-<li><p>regression使用smooth_l1_loss</p>
-</li>
-<li><p>综合两个函数</p>
+<li><p>对feature map的channel级别降维或者升维。</p>
+<h4 id="池化层"><a href="#池化层" class="headerlink" title="池化层"></a>池化层</h4><p>一般常见的网络的结构大多为INPUT -&gt; [[CONV -&gt; RELU]×N -&gt; POOL?]×M -&gt; [FC -&gt; RELU]×K -&gt; FC，vgg net的池化层不同于Alex Net采用的3 × 3 stride为2的maxpooling，而是采用的2 × 2 stride为2的maxpooling。池化层做的事情是根据对应的max或average的方式进行特征筛选。小的kernel带来的是更细节的信息捕获。</p>
 </li>
 </ul>
-<p>frcnn_loss与之相近，就不再赘述</p>
+<h4 id="特征图"><a href="#特征图" class="headerlink" title="特征图"></a>特征图</h4><p>网络在随层数递增的过程中，通过池化也逐渐忽略局部信息，池化操作使得宽高每一次都变为变为一半，而深度每次增加一倍。信息分散到channel层级上。特征图从channel从512开始进入全连接层，全连接层与卷积层相比更考虑全局信息，三个全连接是为了捕捉特征映射来去之间的细微变化。</p>
+<h4 id="layer-pattern"><a href="#layer-pattern" class="headerlink" title="layer pattern"></a>layer pattern</h4><p>vgg net 有两种layer pattern，第二种（[conv-relu]-[conv-relu]-[conv-relu]-pool）比第一种（[conv-relu]-[conv-relu]-pool） 多了一个[conv-relu]，我的理解是</p>
+<ul>
+<li>开始时feature map的local特征信息更加多一些，之后通过增加conv filter的方式扩大channel的数目，在一个layer pattern的中层，channel数已经足够，当再想提取lacal的信息的时候，就加一层[conv - relu]的形式来压榨提炼特征。类似于使用非线性变换对已有特征进行变换，从而产生更多的特征。</li>
+<li>多出的conv对网络中层进一步进行学习和控制保证特征信息不漂移到channel级别上。</li>
+<li>conv本身更加注重单张feature map的局部信息，尽量去平衡channel(depth)级别与local级别(width, height)，控制特征信息不要过于向channel级别偏移。</li>
+</ul>
+<p>关于layer pattern</p>
+<ul>
+<li>串联和串联中带有并联的网络架构。GoogleNet引入inception模块，ResNet引入Residual Block。串联带有一些并联同类操作但不同参数的模块在特征提取上更好(做特征工程)</li>
+<li>用在ImageNet上预训练的模型。</li>
+</ul>
+<h3 id="training-detail"><a href="#training-detail" class="headerlink" title="training detail"></a>training detail</h3><p>在训练的细节方面，几乎与AlexNet相同，额外的bathsize选择的是256。在初始化的方面，需要非常小心，首先对于上图中的configuration A,采用随机初始化进行训练，然后对于更深的模型，将前四个卷积层以及最后三层的全连接层使用A的参数，中间的层采用随机初始化。</p>
+<p>全连接层的随机初始化：</p>
+<ul>
+<li>FC4096-ReLU6-Drop0.5，FC为高斯分布初始化（std=0.005），bias常数初始化（0.1）</li>
+<li>FC4096-ReLU7-Drop0.5，FC为高斯分布初始化（std=0.005），bias常数初始化（0.1）</li>
+<li>FC1000（最后接SoftMax1000分类），FC为高斯分布初始化（std=0.005），bias常数初始化（0.1）<br>实际并非采用的Alex net的std = 0.1， bias = 0。</li>
+</ul>
+<h3 id="test-detail"><a href="#test-detail" class="headerlink" title="test detail"></a>test detail</h3><p>参考overfeat，测试的时候将最后的全连接层该为卷积层，从而可以处理任意分辨率的图片，无需对原图进行resize。但是若原图大于resize之后的图片，那么将最后的s × s的feature map进行average，最终交给softmax的还是1 × 1的feature map。<br>在介绍下面的模块之前首先我们需要先了解一下FCN(全卷积网络)</p>
+<p>测试的细节方面</p>
 
       
 
@@ -271,29 +270,7 @@
     <div class="article-info article-info-index">
       
       
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">CV</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
       
-	<div class="article-category tagcloud">
-		<i class="icon-book icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="/categories/technology//" class="article-tag-list-link color1">technology</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
 
       
 
@@ -343,7 +320,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/02/26/Faster-RCNN-详解与实现/" alt="微信分享二维码">
+      <img src="//pan.baidu.com/share/qrcode?url=http://yoursite.com/2018/07/09/imageNet-小结/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -357,15 +334,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2018/03/06/读资本论/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          读资本论
-        
-      </div>
-    </a>
   
+    <a href="/2018/04/21/近日学习计划——4-21/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">近日学习计划——4.21</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
