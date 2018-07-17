@@ -284,7 +284,16 @@
 <h2 id="Network-in-network"><a href="#Network-in-network" class="headerlink" title="Network in network"></a>Network in network</h2><p>Network in network就是指在整个神经网络中蕴含有小的网络(micro network)，从而更好的在感受野里面提取数据，在本Paper中，小的网络是一个多层感知机。可以把这样一个小的网络看成一个kernel在图片上滑动。由于网络模型的提升，在分类层我们不再使用全连接网络而是使用global average pooling。原因是减少过拟合并且不像全连接是一个黑箱子，有可解释性。</p>
 <p>必要性：作者定义CNN的一个convolution filter是一个泛用线性模型(GLM),他认为GLM对数据的抽象化是低级的（抽象的概念是对于同一个概念的不同变种，它的特征是不变的）,GLM默认潜在概念是线性可分的，而实际上，同一个概念的数据都在非线性流形上,因此捕获这些概念的表达是输入的非线性函数。</p>
 <p>作者将自己的结构称为mlpconv——将input的local patches映射到s输出的特征向量通过名为多层感知机(几个全连接层和非线性的激活函数)的东西。</p>
-<p>mlpconv的结构如下图所示：<br><img src="/images/imageNet6.png" alt=""></p>
+<h3 id="MLP-Convolution-Layers"><a href="#MLP-Convolution-Layers" class="headerlink" title="MLP Convolution Layers"></a>MLP Convolution Layers</h3><p>mlpconv的结构如下图所示：</p>
+<p><img src="/images/imageNet6.png" alt=""></p>
+<p>整个网络的架构如下图所示：</p>
+<p><img src="/images/imageNet7.png" alt=""></p>
+<h3 id="Global-Average-Pooling"><a href="#Global-Average-Pooling" class="headerlink" title="Global Average Pooling"></a>Global Average Pooling</h3><h2 id="FCN-Fully-Convolutional-Networks"><a href="#FCN-Fully-Convolutional-Networks" class="headerlink" title="FCN(Fully Convolutional Networks)"></a>FCN(Fully Convolutional Networks)</h2><p>key insight: 输入任意,输出为相应大小。<br>名词解释： dense prediction : the task of predict the labels of every pixel in the image.</p>
+<p>典型的网络，都有全连接层导致整个网络的输入必须是固定尺寸，但是，我们实际上可以把全连接层看做是对整张图片进行卷积。由于使用全连接将图片本身的空间信息破坏了，而卷积网络则是有翻译不变性，输出始终与输入的位置相关。因此将网络最后的全连接层该为全卷积层。结构如下图所示：</p>
+<p><img src="/images/imagNet9.png" alt=""></p>
+<p>经过多次卷积之后，得到的图像越来越小，FCN需要得到每一个像素的类别，采取上采样，经过5次卷积(pooling)之后，图像的分辨率依次缩小了2，4，8，16，32倍。对于最后一层的输出图像，需要进行32倍的上采样，以得到原图一样的大小。</p>
+<p>上采样是通过反卷积（deconvolution）实现，对第5层的输出（32倍放大）反卷积到原图大小，得到的结果还是不够精确，一些细节无法恢复。于是Jonathan将第4层的输出和第3层的输出也依次反卷积，分别需要16倍和8倍上采样，结果就精细一些了。下图是这个卷积和反卷积上采样的过程：</p>
+<p><img src="/images/imageNet10.png" alt=""></p>
 
       
 
@@ -1395,11 +1404,11 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Machine Learning</a>
+                <a href="javascript:void(0)" class="js-tag color2">machine learning</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">machine learning</a>
+                <a href="javascript:void(0)" class="js-tag color2">Machine Learning</a>
               </li>
              
               <li class="article-tag-list-item">
