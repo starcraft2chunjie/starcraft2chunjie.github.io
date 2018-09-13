@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-07-17T15:11:20.661Z</updated>
+  <updated>2018-08-14T19:51:35.370Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,48 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>speech recognition论文小结</title>
+    <link href="http://yoursite.com/2018/08/15/speech-recognition%E8%AE%BA%E6%96%87%E5%B0%8F%E7%BB%93/"/>
+    <id>http://yoursite.com/2018/08/15/speech-recognition论文小结/</id>
+    <published>2018-08-14T19:51:35.000Z</published>
+    <updated>2018-08-14T19:51:35.370Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>RNN/Sequence-to-Sequence Model</title>
+    <link href="http://yoursite.com/2018/07/29/RNN-Sequence-to-Sequence-Model/"/>
+    <id>http://yoursite.com/2018/07/29/RNN-Sequence-to-Sequence-Model/</id>
+    <published>2018-07-29T14:06:01.000Z</published>
+    <updated>2018-08-18T09:33:33.795Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>unsupervised learning小结</title>
+    <link href="http://yoursite.com/2018/07/17/unsupervised-learning%E5%B0%8F%E7%BB%93/"/>
+    <id>http://yoursite.com/2018/07/17/unsupervised-learning小结/</id>
+    <published>2018-07-17T15:37:31.000Z</published>
+    <updated>2018-07-17T15:37:31.224Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>imageNet 小结</title>
@@ -30,28 +72,6 @@
       
       
         &lt;p&gt;久违的更新～～～，时值暑假，正好把之前没看过的paper仔细的看一遍，也同时为了给自己打下一个更好的基础。我就按照github上的paper的分类精选一个个看下来，paper较多，大约有一百多篇，一个暑假可能看不完，但是我会尽量多看些，并将博客的这个paper系列继续下去。
-      
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>近日学习计划——4.21</title>
-    <link href="http://yoursite.com/2018/04/21/%E8%BF%91%E6%97%A5%E5%AD%A6%E4%B9%A0%E8%AE%A1%E5%88%92%E2%80%94%E2%80%944-21/"/>
-    <id>http://yoursite.com/2018/04/21/近日学习计划——4-21/</id>
-    <published>2018-04-21T15:29:49.000Z</published>
-    <updated>2018-04-21T15:40:19.641Z</updated>
-    
-    <content type="html"><![CDATA[<h4 id="deadline-5-1"><a href="#deadline-5-1" class="headerlink" title="deadline : 5.1"></a>deadline : 5.1</h4><ul><li><p>Deep Learning: Linear algebra chapter and Probability and Information Theory chapter</p></li><li><p>CTPN paper</p></li><li><p>AMSGrad Paper</p></li><li><p>self-attention Paper</p></li><li><p>CTPN(Chinese OCR) source code</p></li><li><p>attention source code</p></li></ul>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h4 id=&quot;deadline-5-1&quot;&gt;&lt;a href=&quot;#deadline-5-1&quot; class=&quot;headerlink&quot; title=&quot;deadline : 5.1&quot;&gt;&lt;/a&gt;deadline : 5.1&lt;/h4&gt;&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Deep Learning: Li
       
     
     </summary>
@@ -153,37 +173,6 @@
     
     
       <category term="Machine Learning" scheme="http://yoursite.com/tags/Machine-Learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>给自己的规矩</title>
-    <link href="http://yoursite.com/2018/03/19/%E7%BB%99%E8%87%AA%E5%B7%B1%E7%9A%84%E8%A7%84%E7%9F%A9/"/>
-    <id>http://yoursite.com/2018/03/19/给自己的规矩/</id>
-    <published>2018-03-18T20:18:52.000Z</published>
-    <updated>2018-03-18T20:28:19.412Z</updated>
-    
-    <content type="html"><![CDATA[<p>根据之前自己的文章《最近的想法》而制定的自己的一些规矩，希望自己能够一直坚持下去：</p><ul><li><p>手机不允许带到床上</p></li><li><p>晚上没课去图书馆，回来去七楼，十一点下去学英语和一些杂事。</p></li><li><p>每天写daily report, 每周写weekly report</p></li><li><p>一周一篇论文，需要完全读懂。</p></li><li><p>十二点一定要上床。</p></li><li><p>不允许带耳机出门。</p></li></ul><p>写下来以便时刻提醒监督自己。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;根据之前自己的文章《最近的想法》而制定的自己的一些规矩，希望自己能够一直坚持下去：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;手机不允许带到床上&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;晚上没课去图书馆，回来去七楼，十一点下去学英语和一些杂事。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;每天写da
-      
-    
-    </summary>
-    
-      <category term="life" scheme="http://yoursite.com/categories/life/"/>
-    
-    
-      <category term="日记" scheme="http://yoursite.com/tags/%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
