@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2018-08-14T19:51:35.370Z</updated>
+  <updated>2018-07-17T15:11:20.661Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,48 +15,6 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
-  
-  <entry>
-    <title>speech recognition论文小结</title>
-    <link href="http://yoursite.com/2018/08/15/speech-recognition%E8%AE%BA%E6%96%87%E5%B0%8F%E7%BB%93/"/>
-    <id>http://yoursite.com/2018/08/15/speech-recognition论文小结/</id>
-    <published>2018-08-14T19:51:35.000Z</published>
-    <updated>2018-08-14T19:51:35.370Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>RNN/Sequence-to-Sequence Model</title>
-    <link href="http://yoursite.com/2018/07/29/RNN-Sequence-to-Sequence-Model/"/>
-    <id>http://yoursite.com/2018/07/29/RNN-Sequence-to-Sequence-Model/</id>
-    <published>2018-07-29T14:06:01.000Z</published>
-    <updated>2018-08-18T09:33:33.795Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>unsupervised learning小结</title>
-    <link href="http://yoursite.com/2018/07/17/unsupervised-learning%E5%B0%8F%E7%BB%93/"/>
-    <id>http://yoursite.com/2018/07/17/unsupervised-learning小结/</id>
-    <published>2018-07-17T15:37:31.000Z</published>
-    <updated>2018-07-17T15:37:31.224Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-  </entry>
   
   <entry>
     <title>imageNet 小结</title>
@@ -198,32 +156,6 @@
     
     
       <category term="Machine learning" scheme="http://yoursite.com/tags/Machine-learning/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>读资本论</title>
-    <link href="http://yoursite.com/2018/03/06/%E8%AF%BB%E8%B5%84%E6%9C%AC%E8%AE%BA/"/>
-    <id>http://yoursite.com/2018/03/06/读资本论/</id>
-    <published>2018-03-05T23:15:31.000Z</published>
-    <updated>2018-03-05T23:18:26.603Z</updated>
-    
-    <content type="html"><![CDATA[<p>百忙之中偶有余闲，决定读一读《资本论》，权当兴趣使然。</p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;p&gt;百忙之中偶有余闲，决定读一读《资本论》，权当兴趣使然。&lt;/p&gt;
-
-      
-    
-    </summary>
-    
-      <category term="life" scheme="http://yoursite.com/categories/life/"/>
-    
-    
-      <category term="经济" scheme="http://yoursite.com/tags/%E7%BB%8F%E6%B5%8E/"/>
     
   </entry>
   

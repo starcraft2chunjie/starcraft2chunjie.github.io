@@ -2,27 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://yoursite.com/2018/07/29/RNN-Sequence-to-Sequence-Model/</loc>
-    
-    <lastmod>2018-08-18T09:33:33.795Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/08/15/speech-recognition%E8%AE%BA%E6%96%87%E5%B0%8F%E7%BB%93/</loc>
-    
-    <lastmod>2018-08-14T19:51:35.370Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/07/17/unsupervised-learning%E5%B0%8F%E7%BB%93/</loc>
-    
-    <lastmod>2018-07-17T15:37:31.224Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2018/07/09/imageNet-%E5%B0%8F%E7%BB%93/</loc>
     
     <lastmod>2018-07-17T15:11:20.661Z</lastmod>
@@ -68,13 +47,6 @@
     <loc>http://yoursite.com/think/index.html</loc>
     
     <lastmod>2018-03-18T20:12:32.748Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2018/03/06/%E8%AF%BB%E8%B5%84%E6%9C%AC%E8%AE%BA/</loc>
-    
-    <lastmod>2018-03-05T23:18:26.603Z</lastmod>
     
   </url>
   
