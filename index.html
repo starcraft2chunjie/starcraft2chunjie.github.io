@@ -179,6 +179,126 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-detection系列：如何解决Scale-Variance的问题？" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/09/18/detection系列：如何解决Scale-Variance的问题？/">detection系列：如何解决Scale Variance的问题？</a>
+    </h1>
+  
+
+        
+        <a href="/2018/09/18/detection系列：如何解决Scale-Variance的问题？/" class="archive-article-date">
+  	<time datetime="2018-09-17T16:01:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2018-09-18</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>现有的detection普遍存在的困难是如何解决图片中物体大小变化过大的问题，在有些图片中，物体占了图片的70%~80%，有些则只占了图片的0.01%~0.25%, 单个feature map是很难预测所有的物体以为它的神经元的感受野是有限制的。尤其是小物体，是很难去检测和分类的，因为它们包含很少的信息，容易被当做背景，且对定位的要求较高。具体而言，一方面，网络越深，深层的神经元的感受野很大，stride通常也可以达到32 × 32，导致小物体会被直接忽略；另一方面，对于使用Anchor思想的detection方法，小物体即使在anchor里面，也会因为IoU过小而被忽略。下面，就介绍现在主流的集中缓解Scale Variance的方法。</p>
+<h2 id="Image-Pyramid"><a href="#Image-Pyramid" class="headerlink" title="Image Pyramid"></a>Image Pyramid</h2><p>如下图所示：</p>
+<p><img src="/images/det1_1.png" alt=""></p>
+<p>image pyramid大多都不会在训练的时候使用，因为非常消耗计算资源，一般会在测试的时候使用（参考Fast RCNN， sppNet），但是这样的话，就会导致测试和训练的不连续性。因此，这种方式的image pyramid现在已经很少了。</p>
+<p>新提出的Scale Normalization for Image Pyramid采取的另外一种思想，首先这篇paper叙述了两个实验，第一个实验是分类实验，通过控制变量说明了</p>
+<ul>
+<li>如果训练样本和测试样本的分辨率(resolution)相差太大，performance必然下降。</li>
+<li>对于小物体，如果改造网络结构，将在imageNet上预训练好的模型conv该为3 × 3,stride 改为1的话，最后测试的performance勉强可以。但是需要额外修改网络，很麻烦。</li>
+<li>不改变网络结构，先在高精度的imageNet上预训练，然后将小物体unsample成低分辨率的图片, 在上面finetune。这个的performance最好。</li>
+</ul>
+<p>这个实验充分说明了upsample的好处。紧接着的第二个实验，首先有两批不同精度的图片，800 × 1400和1400 × 2000。对两批图片都进行训练，按照理论，高精度的图片，对于小物体的检测应该更好，实际是对于适当scale范围的物体有很好的检测效果，但是对于很小的物体以及很大的物体效果则下降了。注意，这里图片无论大小，都包含了不同scale的物体。根据这个推断，原因应该是对于CNN而言，其本身就不具备scale invariance即使数据充足，包含不同scale的物体，CNN也很难学到不同scale，CNN能检测不同scale的假象，更多是由于CNN强行用capacity来memorize不同scale的物体，这导致大大的浪费了capacity。该Paper提出的是将scale的范围控制在一个比较合理的范围之内，这样就能比较好的检测出来。但是，如果直接把超过某一个scale范围的物体直接忽略掉，实验的结果是更差，原因是失去了一部分语义特征。因此，下面就是该paper提出的模型Scale Normalization。</p>
+<h3 id="Scale-Normalization"><a href="#Scale-Normalization" class="headerlink" title="Scale Normalization"></a>Scale Normalization</h3><p>Scale Normalization的示意图如下图所示：<br><img src="/images/det1_2.png" alt=""></p>
+<p>Scale Normalization的运行机制比较简单，训练的时候，只回传大小在预定范围内的proposal的graident，忽略掉过大或者过小的proposal，在测试中，建立大小不同的image Pyramid，在每张图上都运行这样一个detector，只保留大小在指定范围内的输出结果，最终一起nms。</p>
+<h2 id="default-reference-boxes"><a href="#default-reference-boxes" class="headerlink" title="default reference boxes"></a>default reference boxes</h2><p>许多模型使用一系列的不同大小和长宽比的default boxes来覆盖不同的物体。如SSD（下一点会说明）, yolo9000, faster RCNN, R-FCN等。 RCNN系列在之前的博文里面已经说明过，其使用default boxes的思想参考之前即可。</p>
+<h2 id="multiple-convolutional-layer-used-for-prediction"><a href="#multiple-convolutional-layer-used-for-prediction" class="headerlink" title="multiple convolutional layer used for prediction"></a>multiple convolutional layer used for prediction</h2><p>另外一种想法是使用不同层次的feature map来检测不同scale的物体，比如SSD（Single Shot MultiBox Detector）。</p>
+<h3 id="SSD"><a href="#SSD" class="headerlink" title="SSD"></a>SSD</h3><p>SSD的结构如下图所示：</p>
+<p><img src="/images/det1_3.png" alt=""></p>
+<p>它的总体思想是开始的时候使用一个用于图像分类的base network(vgg 16)，然后在后面添加卷积层,并且卷积层的size逐级递减。最后将不同底层和高层的layer综合起来进行预测。</p>
+<p>以下说明具体实现的手段。</p>
+<p>SSD与一般的region proposals + pooling不同的是，SSD中的bounding box是事先定义好的，固定且默认的。bounding box是在不同的feature map上面的每一个点所对应的receptive field中的不同大小，不同长宽比(aspect ratio)的box，因此是预先定义的，固定的。所要做的是将ground truth去对应这些事先定义好的bounding box。<br>如下图所示，大的狗的ground truth对应于4 × 4的feature map中的某一个bounding box，而小的ground truth则对应于8 × 8的feature map中的一个bouding box。其余的box则看成负样本。参考图上的信息，我们可以知道，feature map的第三个dimension为4 × P(P个种类，以及(x, y, w, h))。</p>
+<p><img src="/images/det1_4.png" alt=""></p>
+<p>开始的时候，使用best jaccard overlap来匹配ground truth box和default box。设置一个阙值，大于0.5则意味这匹配。<br>loss函数如下所示</p>
+<p><img src="/images/det1_5.png" alt=""></p>
+<p>N为与ground truth box相匹配的default box的个数。x为某一个default box与其中一个ground truth box是否匹配，匹配为1，不匹配为0。loc意为Smooth L1 Loss,是predict box(l)与ground truth box(g)之间的函数。conf则是Softmax loss。</p>
+<h2 id="Dilated-Convolution-astrous-convolution"><a href="#Dilated-Convolution-astrous-convolution" class="headerlink" title="Dilated Convolution(astrous convolution)"></a>Dilated Convolution(astrous convolution)</h2><p>空洞卷积的使用大大的增加了感受野，但是，其实增加了感受野，对scale variance的问题的解决是没有帮助。因为scale variance产生的原因说到底就是CNN的结构固定，每一层的感受野是固定大小的，无法泛化不同大小的物体。因此，一种解决的方法是让物体的scale相差不大，这也就是第一种方法所采取的策略；另外一种，也就是现在马上要讲到的，让CNN自己学习到灵活变化的感受野。提出的方法是Deformable Convolutional Network。不过，了解它之前，我们需要看一下R-FCN作为基础。</p>
+<h3 id="R-FCN"><a href="#R-FCN" class="headerlink" title="R-FCN"></a>R-FCN</h3><p>R-RCN的结构图如下所示：</p>
+<p><img src="/images/det1_6.png" alt=""></p>
+<p>其使用的主要思想是position-sensitive score map。<br>首先，R-FCN会在共享卷积层后面加上一个一个卷积层，channels为K^2 × (C + 1)。K指的是对于一个ROI,将该ROI划分为K × K个bin，分别代表每一个方位，比如左上就代表该物体的左上位置。因此，C + 1指的就是C个种类加1个背景，而K^2则是指每个channel代表一个方位。如果该ROI中含有某个c种类的物体，那么按照上图所示，则是在每个方位的channel块里面找到该种类的channel，这个channel中对应位置的ROI的对应方位的bin中要有高相应值。score map就是把这个类里面相应方位的bin都取出来,组合在一起，投票决定是否真的包含这个类的物体。那么如何投票决定呢？</p>
+<p>文中采用的是如下公式：</p>
+<p><img src="/images/det1_7.png" alt=""></p>
+<p>相当于显示平均池化，再将所有的bin求一个总和，然后对所有的类使用softmax函数即可得到各个类别的概率。</p>
+<h3 id="Deformable-Convolutional-Network"><a href="#Deformable-Convolutional-Network" class="headerlink" title="Deformable Convolutional Network"></a>Deformable Convolutional Network</h3><p>deformable convolutional network 参考了R-FCN的部分思想，同时又借鉴了dilated convolution的思想，它的核心思想是训练出一些offset，让原先固定的kernel（如3 × 3， dilation = 1）变的灵活（根据offset进行相应的缩放）。情形如图所示：</p>
+<p><img src="/images/det1_8.png" alt=""></p>
+<p>缩放之后的结果很可能不再任何节点上，这个时候就采用双线性差值的方法进行求解。具体的结构如下图所示：</p>
+<p><img src="/images/det1_9.png" alt=""></p>
+<p>想要训练offset的话就需要额外增加卷积层。就是上图中上方的部分,</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">detection</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+	<div class="article-category tagcloud">
+		<i class="icon-book icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/technology//" class="article-tag-list-link color1">technology</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2018/09/18/detection系列：如何解决Scale-Variance的问题？/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-imageNet-小结" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -449,7 +569,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Detection is an important part of computer vision. Today I will take a view at the prevail algorithm in detection areas, named RCNN and it’s extension. </p>
+        <p>Detection is an important part of computer vision. Today I will take a view at the prevailing algorithm in detection areas, named RCNN and it’s extension. </p>
 <h2 id="RCNN"><a href="#RCNN" class="headerlink" title="RCNN"></a>RCNN</h2><p>RCNN’s meaning is region based CNN. Unlike yolo and yolo9000, RCNN chose the region as the base of it’s predict bounding boxes. Finding that if we just use the location like x, y, then it’s hard to converge, because firsty there maybe exist a couple of objects and then the x, y have difficulty deciding which to approach. secondly, x,y has no limition and can appear in anywhere on the image. So RCNN use prechoosed region and then finetune the bounding boxes, actually compute the scaling and offset. The RCNN’s precess is like this:</p>
 <ul>
 <li>use some methods to generate regions(e.t.c selective search)</li>
@@ -463,14 +583,14 @@
 <p>RCNN is the foundation work of image detection using neural network. It still has a lot of drawbacks which will be solved in the next few algorthims.</p>
 <h2 id="SPPnet"><a href="#SPPnet" class="headerlink" title="SPPnet"></a>SPPnet</h2><p>SPPnet add a layer called spatial pyramid pooling layer. The pooling layer is like this:</p>
 <p><img src="/images/Picture5.png" alt=""> </p>
-<p>Suppose we assume that the feature map is H <em> W size. Then we want to put the feature map into 4 </em> 4 so we need to manually regularize the stride to H/4 <em> W/4 and the kernel size of H/4 </em> W/4. Consequnently, the feature map is resized into 4 <em> 4. Likewise, the 2 </em> 2 and 1 * 1 feature map is generated. Then we flat and cluster them into one vector and sent it to the FCN. It plays the role of generate a fix-sized feature map.</p>
+<p>Suppose we assume that the feature map is H <em> W size. Then we want to put the feature map into 4 </em> 4 so we need to manually regularize the stride to H/4 <em> W/4 and the kernel size of H/4 </em> W/4. Consequnently, the feature map is resized into 4 <em> 4. Likewise, the 2 </em> 2 and 1 * 1 feature map is generated. Then we flat and cluster them into one vector and sent it to the fully-connected layers. It plays the role of generate a fix-sized feature map.</p>
 <p>There exist quite a few advantages to use this method. Firstly, RCNN use wrapping to resize the region into fix-size feature map which will cause geometric distortion(like below). And this method will avoid that kind of problem. Moreover, we don’t need to put every region into the network any more. We put the whole image into the network instead. We just need to know where the region is. Depending on this change, the running time is dramatically reduced.(below)</p>
 <p><img src="/images/Picture3.png" alt=""><br><img src="/images/Picture4.png" alt=""></p>
 <h2 id="Fast-RCNN"><a href="#Fast-RCNN" class="headerlink" title="Fast RCNN"></a>Fast RCNN</h2><p>We know that RCNN and SPPnet has Multi-stage pipeline —— we need to put the final output into the SVM and then the regressor. Fast RCNN is born to handle the preblem. The trait of Fast RCNN is single-stage and multi-task. The schemetic diagram is below:</p>
 <p><img src="/images/Picture16png.png" alt=""></p>
 <p>They use softmax to replace SVM because they find softmax is litter better than SVM in this task. We find that all tasks is compressed into one network. </p>
 <p>Another change is that they replace the spatial pyramid pooling layer with a ROI pooling layer(ROI : region of interest) which is a simplified version of SPP. They only use one scale like 7 <em> 7 instead of 4 </em> 4 + 2 * 2 + 1 because they experimented to find that complication brings no improvement.</p>
-<h2 id="Faster-RCNN"><a href="#Faster-RCNN" class="headerlink" title="Faster RCNN"></a>Faster RCNN</h2><p>The whole growing histroy we can summarize as a process of group all task into one single network. Faster RCNN contributes to moving the generate regions precess to the network where we call it RPN (Region Proposal Network). The overall proceeding is like this:</p>
+<h2 id="Faster-RCNN"><a href="#Faster-RCNN" class="headerlink" title="Faster RCNN"></a>Faster RCNN</h2><p>The whole growing histroy we can summarize as a process of group all task into one single network. Faster RCNN contributes to moving the generate regions process to the network where we call it RPN (Region Proposal Network). The overall proceeding is like this:</p>
 <p><img src="/images/Picture7.png" alt=""></p>
 <p>The detailed schemetic diagram is like this:</p>
 <p><img src="/images/Picture8.png" alt=""></p>
@@ -479,7 +599,7 @@
 <p>We need to explain some place in the picture 2. As we all know, for one feature map and for one pixel, it has a receptive field. If we project a pixel in the feature map somewhere to the raw image. This will be an area which we call grid ceil. For one grid ceil, we define k anchors. In this paper, we consider k as 9 in default. 2k means that for k anchor, there will be two categories, whether it has a object or not. 4k’s 4 means (x, y, w, h) for every anchor.</p>
 <p>Based on the explanation above, we can take a step forward. The detail RPN is like this:</p>
 <p><img src="/images/Picture11.png" alt=""></p>
-<p>The network above is a classification layer. And the third dimension is eighteen filters which is 2 <em> 9(k), 36 is the 4 </em> 9(k). We send all of this into the proposal layer which we include sorting, NMS, and sorting and NMS again(NMS : non maximum supression).</p>
+<p>The network above is a classification layer. And the third dimension is eighteen filters which is 2 × 9(k), 36 is the 4 × 9(k). We send all of this into the proposal layer which we include sorting, NMS, and sorting and <a href="https://blog.csdn.net/danieljianfeng/article/details/43084875" target="_blank" rel="noopener">NMS</a> again(NMS : non maximum supression).</p>
 <h2 id="Mask-RCNN"><a href="#Mask-RCNN" class="headerlink" title="Mask RCNN"></a>Mask RCNN</h2><p>The main change to the Mask RCNN is below:</p>
 <p><img src="/images/Picture12.png" alt=""></p>
 <p>The network add a Lmask task in the final network and replace the ROI pooling with the ROI Align network. The network itself is also improved<br>on the basis of the some methods called ResNeXt-101 and FPN.</p>
@@ -1135,19 +1255,23 @@ MathJax.Hub.Queue(function() {
           <ul class="article-tag-list" q-show="showTags">
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color2">Machine Learning</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Machine learning</a>
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">CV</a>
+                <a href="javascript:void(0)" class="js-tag color5">detection</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Machine Learning</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">machine learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color3">CV</a>
               </li>
             
             <div class="clearfix"></div>
