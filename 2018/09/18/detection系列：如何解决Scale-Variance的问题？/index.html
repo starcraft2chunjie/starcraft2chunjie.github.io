@@ -25,7 +25,9 @@
 <meta property="og:image" content="http://yoursite.com/images/det1_7.png">
 <meta property="og:image" content="http://yoursite.com/images/det1_8.png">
 <meta property="og:image" content="http://yoursite.com/images/det1_9.png">
-<meta property="og:updated_time" content="2018-09-19T21:25:29.807Z">
+<meta property="og:image" content="http://yoursite.com/images/det1_10.png">
+<meta property="og:image" content="http://yoursite.com/images/det1_11.png">
+<meta property="og:updated_time" content="2018-09-20T15:47:36.794Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="detection系列：如何解决Scale Variance的问题？">
 <meta name="twitter:description" content="现有的detection普遍存在的困难是如何解决图片中物体大小变化过大的问题，在有些图片中，物体占了图片的70%~80%，有些则只占了图片的0.01%~0.25%, 单个feature map是很难预测所有的物体以为它的神经元的感受野是有限制的。尤其是小物体，是很难去检测和分类的，因为它们包含很少的信息，容易被当做背景，且对定位的要求较高。具体而言，一方面，网络越深，深层的神经元的感受野很大，st">
@@ -244,7 +246,14 @@
 <p><img src="/images/det1_8.png" alt=""></p>
 <p>缩放之后的结果很可能不再任何节点上，这个时候就采用双线性差值的方法进行求解。具体的结构如下图所示：</p>
 <p><img src="/images/det1_9.png" alt=""></p>
-<p>想要训练offset的话就需要额外增加卷积层。就是上图中上方的部分,</p>
+<p>想要训练offset的话就需要额外增加卷积层。就是上图中上方的部分,首先讲之前的卷积层通过额外的一层卷积获得大小不变，而channel变为2N的卷积层，N为卷积核所含节点的个数（比如3 × 3的卷积核N就为9），offset为2D，因此总的为2N。接着在对应channel的对应位置获取的值，综合起来，就是上图中的offset，然后将其应用到之后的卷积之中去。这是Deformable Convolutional Network使用的其中一个方法。</p>
+<p>另外，由于模型的改进是基于其他state-of-art的模型的。对于faster-RCNN而言，其ROI-pooling要做到改进的话，也用到了deformable RoI pooling，如下图所示：</p>
+<p><img src="/images/det1_10.png" alt=""></p>
+<p>操作与之前类似，经过fc之后产生的offset乘以ROI的width或height以及γ （default0.1）算出偏移量，将对应的地方（偏移量非整数使用非线性插值）取出来构成output roi feature map。</p>
+<p>但是，如果模型是基于R-FCN的话，ROI-pooling层就变为了 deformable PS RoI pooling（PS：position-sensitive），如下图所示：</p>
+<p><img src="/images/det1_11.png" alt=""></p>
+<p>理解了deformable RoI pooling之后以及看了R-FCN之后，这个改进就非常的简单了，实际上就是将原来固定的bin做了偏移而已，这里不再详述。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上就是目前应用比较广的解决scale-variance的方法，第二种和第三种是比较早期的思想，第一种和第四种则是在分析了CNN的内在之后找到了的方法。</p>
 
       
 
@@ -492,15 +501,15 @@ MathJax.Hub.Queue(function() {
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color5">detection</a>
-              </li>
-             
-              <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">Machine Learning</a>
               </li>
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color2">machine learning</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color5">detection</a>
               </li>
              
               <li class="article-tag-list-item">
